@@ -14,6 +14,10 @@ This tool was inspired during the [RTO course](https://courses.zeropointsecurity
 - Tries to do automatically COM Hijacking Persistence via Task Scheduler.
 - Tries to use "TreatAs" key in order to refere to a different component.
 
+## Speacial Thanks:
+- [@dimtsikopoulos](https://twitter.com/dimtsikopoulos)
+- [@0xvm](https://twitter.com/0xvm)
+
 ## License
 Copyright (c) 2022 Nikos Vourdas<br /><br />
 Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
