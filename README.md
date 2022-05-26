@@ -19,7 +19,7 @@ Copyright (c) 2022 Nikos Vourdas<br /><br />
 Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## .NET Framework
-#### 4.8
+### 4.8
 
 ## Usage:
 
@@ -56,14 +56,28 @@ Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]
 
 -> TreatAs Usage:
     .\COM-Hunter.exe Persist TreatAs <clsid> <full_path_of_evil_dll>
+```
 
--> Example Usages:
+## Example Usages:
+    - Get-Entry (Search Mode)
+    ```
     .\COM-Hunter.exe Search Get-Entry
+    ```
+    - Find-Persist (Search Mode)
+    ```
     .\COM-Hunter.exe Search Find-Persist
+    ```
+    - General (Persist Mode)
+    ```
     .\COM-Hunter.exe Persist General 'HKCU:Software\Classes\CLSID\...' C:\Users\nickvourd\Desktop\beacon.dll
+    ```
+    - Tasksch (Persist Mode)
+    ```
     .\COM-Hunter.exe Persist Tasksch C:\Users\nickvourd\Desktop\beacon.dll
+    ```
 
--> Example Format Valid CLSIDs:
+## Example Format Valid CLSIDs:
+```
     Software\Classes\CLSID\...
     HKCU:Software\Classes\CLSID\...
     HKCU:\Software\Classes\CLSID\...
@@ -71,5 +85,4 @@ Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]
     HKEY_CURRENT_USER:Software\Classes\CLSID\...
     HKEY_CURRENT_USER:\Software\Classes\CLSID\...
     HKEY_CURRENT_USER\Software\Classes\CLSID\...
-```
-
+ ```
