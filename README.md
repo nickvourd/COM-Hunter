@@ -59,30 +59,37 @@ Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]
 ```
 
 ## Example Usages:
-    - Get-Entry (Search Mode)
+- Get-Entry (Search Mode)
+    
     ```
     .\COM-Hunter.exe Search Get-Entry
     ```
-    - Find-Persist (Search Mode)
+- Find-Persist (Search Mode)
+    
     ```
     .\COM-Hunter.exe Search Find-Persist
     ```
-    - General (Persist Mode)
+    
+- General (Persist Mode)
+    
     ```
     .\COM-Hunter.exe Persist General 'HKCU:Software\Classes\CLSID\...' C:\Users\nickvourd\Desktop\beacon.dll
     ```
-    - Tasksch (Persist Mode)
+    
+- Tasksch (Persist Mode)
+    
     ```
     .\COM-Hunter.exe Persist Tasksch C:\Users\nickvourd\Desktop\beacon.dll
     ```
 
 ## Example Format Valid CLSIDs:
+
 ```
-    Software\Classes\CLSID\...
-    HKCU:Software\Classes\CLSID\...
-    HKCU:\Software\Classes\CLSID\...
-    HKCU\Software\Classes\CLSID\...
-    HKEY_CURRENT_USER:Software\Classes\CLSID\...
-    HKEY_CURRENT_USER:\Software\Classes\CLSID\...
-    HKEY_CURRENT_USER\Software\Classes\CLSID\...
- ```
+Software\Classes\CLSID\...
+HKCU:Software\Classes\CLSID\...
+HKCU:\Software\Classes\CLSID\...
+HKCU\Software\Classes\CLSID\...
+HKEY_CURRENT_USER:Software\Classes\CLSID\...
+HKEY_CURRENT_USER:\Software\Classes\CLSID\...
+HKEY_CURRENT_USER\Software\Classes\CLSID\...
+```
