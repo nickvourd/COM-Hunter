@@ -4,7 +4,7 @@ COM Hijacking VOODOO
 COM-hunter is a COM Hijacking persistnce tool written in C#.<br /><br />
 This tool was inspired during the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red-team-ops) of [@zeropointsecltd](https://twitter.com/zeropointsecltd)
 
-## Features:
+## Features
 
 - Finds out entry valid CLSIDs in the victim's machine.
 - Finds out valid CLSIDs via Task Scheduler in the victim's machine.
@@ -14,7 +14,7 @@ This tool was inspired during the [RTO course](https://courses.zeropointsecurity
 - Tries to do automatically COM Hijacking Persistence via Task Scheduler.
 - Tries to use "TreatAs" key in order to refere to a different component.
 
-## Speacial Thanks:
+## Speacial Thanks
 - [@dimtsikopoulos](https://twitter.com/dimtsikopoulos)
 - [@0xvm](https://twitter.com/0xvm)
 
@@ -25,7 +25,7 @@ Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]
 ## .NET Framework
 ### 4.8
 
-## Usage:
+## Usage
 
 ```
 [+] Usage:
@@ -62,7 +62,7 @@ Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]
     .\COM-Hunter.exe Persist TreatAs <clsid> <full_path_of_evil_dll>
 ```
 
-## Example Usages:
+## Example Usages
 - Get-Entry (Search Mode):
     
     ```
@@ -86,7 +86,7 @@ Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]
     .\COM-Hunter.exe Persist Tasksch C:\Users\nickvourd\Desktop\beacon.dll
     ```
 
-## Example Format Valid CLSIDs:
+## Example Format Valid CLSIDs
 
 ```
 Software\Classes\CLSID\...
