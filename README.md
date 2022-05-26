@@ -15,7 +15,8 @@ This tool was inspired during the [RTO course](https://courses.zeropointsecurity
 - Tries to use "TreatAs" key in order to refere to a different component.
 
 ## License
-#### MIT License
+Copyright (c) 2022 Nikos Vourdas<br /><br />
+License under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Usage:
 
