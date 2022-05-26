@@ -19,7 +19,7 @@ Copyright (c) 2022 Nikos Vourdas<br /><br />
 Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## .NET Framework
-4.8
+#### 4.8
 
 ## Usage:
 
