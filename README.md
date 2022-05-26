@@ -16,7 +16,7 @@ This tool was inspired during the [RTO course](https://courses.zeropointsecurity
 
 ## License
 Copyright (c) 2022 Nikos Vourdas<br /><br />
-License under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## Usage:
 
