@@ -1,7 +1,7 @@
 # COM-Hunter
 COM Hijacking VOODOO
 
-COM-hunter is a COM Hijacking persistnce tool written in C# (4.8 .NET Framework)<br /><br />
+COM-hunter is a COM Hijacking persistnce tool written in C#.<br /><br />
 This tool was inspired during the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red-team-ops) of [@zeropointsecltd](https://twitter.com/zeropointsecltd)
 
 ## Features:
@@ -17,6 +17,9 @@ This tool was inspired during the [RTO course](https://courses.zeropointsecurity
 ## License
 Copyright (c) 2022 Nikos Vourdas<br /><br />
 Under the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+##.NET Framework
+4.8
 
 ## Usage:
 
