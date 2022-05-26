@@ -85,7 +85,7 @@ namespace COM_Hunter
 
         public static void About()
         {
-            Console.WriteLine("\n[+] COM Hunter is automated COM Hijacking persistence tool written in C#.\n\n[+] Special Thanks:\n\n@dimtsikopoulos\n@0xvm\n\n");
+            Console.WriteLine("\n[+] COM Hunter is automated COM Hijacking persistence tool written in C#.\n\n[+] Special Thanks:\n\n@dimtsikopoulos\n@0xvm\n\n[+] More Info here: https://github.com/nickvourd/COM-Hunter\n[+] Follow me on Twitter: @nickvourd\n[+] Personal blog: nickvourd.eu\n\n");
         }
 
         public static void ErrorMsg()
