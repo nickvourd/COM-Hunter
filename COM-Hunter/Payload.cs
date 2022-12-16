@@ -75,6 +75,18 @@ namespace COM_Hunter
                 {
                     clsid = clsid.Replace("HKEY_CURRENT_USER\\", "");
                 }
+                else if (clsid.StartsWith("HKEY_LOCAL_MACHINE:\\"))
+                {
+                    clsid = clsid.Replace("HKEY_LOCAL_MACHINE:\\", "");
+                }
+                else if (clsid.StartsWith("HKEY_LOCAL_MACHINE:"))
+                {
+                    clsid = clsid.Replace("HKEY_LOCAL_MACHINE:", "");
+                }
+                else if (clsid.StartsWith("HKEY_LOCAL_MACHINE\\"))
+                {
+                    clsid = clsid.Replace("HKEY_LOCAL_MACHINE\\", "");
+                }
                 else
                 {
                     Info.ErrorMsg();
