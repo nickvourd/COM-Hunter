@@ -63,12 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Packages\Arguments.cs" />
-    <Compile Include="Packages\Build.cs" />
-    <Compile Include="Packages\Check.cs" />
-    <Compile Include="Packages\Info.cs" />
-    <Compile Include="Packages\Search.cs" />
-    <Compile Include="Packages\Settings.cs" />
+    <Compile Include="Arguments.cs" />
+    <Compile Include="Build.cs" />
+    <Compile Include="Check.cs" />
+    <Compile Include="Info.cs" />
+    <Compile Include="Search.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
