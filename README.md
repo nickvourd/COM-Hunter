@@ -4,7 +4,7 @@ COM Hijacking VOODOO
 
 <p align="center">
   <img width="500" height="400" src="/Pictures/logo2.png"><br /><br />
-  <img alt="Static Badge" src="https://img.shields.io/badge/License-MIT-green?link=https%3A%2F%2Fgithub.com%2Fnickvourd%2FCOM-Hunter%2Fblob%2Fmain%2FLICENSE">
+  <img alt="GitHub License" src="https://img.shields.io/github/license/nickvourd/COM-Hunter?style=social&logo=GitHub&logoColor=purple">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/nickvourd/COM-Hunter?logoColor=yellow">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/nickvourd/COM-Hunter?logoColor=red">
   <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/nickvourd/COM-Hunter?logoColor=blue">
