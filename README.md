@@ -90,13 +90,13 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
 .\COM-Hunter.exe search "{01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}" -l
 ```
 
-:information_source: Perform classic persistence via DLL implementation:
+:information_source: Perform classic persistence using DLL implementation:
 
 ```
 .\COM-Hunter.exe persist AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 C:\Users\victim\Desktop\implant.dll -i
 ```
 
-:information_source: Perform classic persistence via EXE implementation:
+:information_source: Perform classic persistence using EXE implementation:
 
 ```
 .\COM-Hunter.exe persist "{AB8902B4-09CA-4bb6-B78D-A8F59079A8D5}" C:\Users\victim\Desktop\implant.dll --localserver32
