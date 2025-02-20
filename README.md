@@ -112,5 +112,5 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
 
 - [Persistence: “the continued or prolonged existence of something”: Part 2 – COM Hijacking by MDSec](https://www.mdsec.co.uk/2019/05/persistence-the-continued-or-prolonged-existence-of-something-part-2-com-hijacking/)
 - [Abusing the COM Registry Structure (Part 2): Hijacking & Loading Techniques by BOHOPS](https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/)
-- [https://enigma0x3.net/2016/05/25/userland-persistence-with-scheduled-tasks-and-com-handler-hijacking/ by Enigma0x3](https://enigma0x3.net/2016/05/25/userland-persistence-with-scheduled-tasks-and-com-handler-hijacking/)
+- [Userland Persistence with Scheduled Tasks and COM Handler Hijacking by Enigma0x3](https://enigma0x3.net/2016/05/25/userland-persistence-with-scheduled-tasks-and-com-handler-hijacking/)
 - [COM Objects Hijacking by Virus Total](https://blog.virustotal.com/2024/03/com-objects-hijacking.html)
