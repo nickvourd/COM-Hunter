@@ -15,7 +15,7 @@ COM Hijacking VOODOO
 
 COM-Hunter is a COM Hijacking persistnce tool written in C#.
 
-![Static Badge](https://img.shields.io/badge/.NET-4.8-blue?style=flat&logoSize=auto).
+![Static Badge](https://img.shields.io/badge/.NET-4.8-blue?style=flat&logoSize=auto)
 
 The following list explains the available modes:
 
