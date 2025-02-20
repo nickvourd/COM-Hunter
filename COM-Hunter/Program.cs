@@ -1,33 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using COM_Hunter.Packages;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-
+using System.Text;
+using System.Threading.Tasks;
 
 namespace COM_Hunter
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            //Show ascii art
+            //Show Ascii Art
             Info.ShowLogo();
 
-            //Try to find out Architecture of System
-            var enviromentArchChecker = new Enviromental();
-            enviromentArchChecker.EnviromertArch();
-
-            //If no arguments show usage
-            if (args.Length < 1)
-            {
-                Info.HelpMsg();
-                Settings.ExitCodeMethodError();
-            }
-            //check arguments
-            else
-            {
-                List<string> arguments = args.ToList();
-                //Argument constructor
-                Arguments arg = new Arguments(arguments);
-            }
+            // Get arguments
+            List<string> arguments = args.ToList();
+            Arguments arg = new Arguments(arguments);
         }
     }
 }
