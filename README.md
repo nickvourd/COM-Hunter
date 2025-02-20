@@ -32,3 +32,44 @@ This project created with :heart: by [@nickvourd](https://x.com/nickvourd) && [@
 - [COM-Hunter](#com-hunter)
     - [Description](#description)
     - [Table of Contents](#table-of-contents)
+    - [Usage](#usage)
+
+## Usage
+
+```
+ ██████╗ ██████╗ ███╗   ███╗      ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
+██╔════╝██╔═══██╗████╗ ████║      ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+██║     ██║   ██║██╔████╔██║█████╗███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+██║     ██║   ██║██║╚██╔╝██║╚════╝██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+╚██████╗╚██████╔╝██║ ╚═╝ ██║      ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝      ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+
+                                   Version: 2.0
+                             @nickvourd && @S1ckB0y1337
+                  ~ Inspired during the RTO course by @zeropointsecltd ~
+
+Usage: COM_Hunter.exe <mode> <options>
+
+[+] Modes:
+    search             Search Mode
+    persist            Classic Persist Mode
+    tasksch            Task Scheduler Mode
+
+[+] Search Mode:
+Usage:  COM-Hunter.exe search <CLSID> <options>
+    -a, --all                   Search DLL and EXE implementations in HKLM and HKCU
+    -i, --inprocserver32        Search DLL implementations in HKLM and HKCU
+    -l, --localserver32         Search EXE implementations in HKLM and HKCU
+    -m, --machine               Search DLL and EXE implementations in HKLM
+    -u, --user                  Search DLL and EXE implementations in HKCU
+
+[+] Classic Persist Mode:
+Usage:  COM-Hunter.exe persist <CLSID> <binary_path> <options>
+    -i, --inprocserver32        Set DLL implementation
+    -l, --localserver32         Set EXE implementation
+
+[+] Task Scheduler Mode:
+Usage:  COM-Hunter.exe tasksch <binary_path> <option>
+    -i, --inprocserver32        Set DLL implementation
+    -l, --localserver32         Set EXE implementation
+```
