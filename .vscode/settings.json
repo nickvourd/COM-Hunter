@@ -1,3 +1,4 @@
 {
-    "dotnet.preferCSharpExtension": true
+    "dotnet.preferCSharpExtension": true,
+    "C_Cpp.errorSquiggles": "disabled"
 }
