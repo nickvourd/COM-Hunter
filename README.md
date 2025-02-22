@@ -66,7 +66,7 @@ Usage:  COM-Hunter.exe search <CLSID> <options>
     -u, --user                  Search DLL and EXE implementations in HKCU
 
 [+] Classic Persist Mode:
-Usage:  COM-Hunter.exe persist <CLSID> <binary_path> <options>
+Usage:  COM-Hunter.exe persist <CLSID> <binary_path> <option>
     -i, --inprocserver32        Set DLL implementation
     -l, --localserver32         Set EXE implementation
 
@@ -88,6 +88,12 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
 
 ```
 .\COM-Hunter.exe search "{01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}" -l
+```
+
+:information_source: Search EXE implementations in HKLM:
+
+```
+.\COM-Hunter.exe search "{01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}" -l --machine
 ```
 
 :information_source: Perform classic persistence using DLL implementation:
