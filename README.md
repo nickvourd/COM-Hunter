@@ -90,7 +90,7 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
 .\COM-Hunter.exe search "{01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}" -l
 ```
 
-:information_source: Search EXE implementations in HKLM:
+:information_source: Advanced search EXE implementations in HKLM:
 
 ```
 .\COM-Hunter.exe search "{01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}" -l --machine
