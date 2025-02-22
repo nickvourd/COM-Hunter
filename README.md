@@ -23,7 +23,9 @@ The following list explains the available modes:
 - **Classic Persist Mode**: Performs classic COM hijacking persistence using `LocalServer32` or `InprocServer32`.
 - **Task Scheduler Mode**: Automatically establishes COM hijacking persistence via Task Scheduler using `LocalServer32` or `InprocServer32`.
 
-This project created with :heart: by [@nickvourd](https://x.com/nickvourd) && [@S1ckB0y1337](https://x.com/S1ckB0y1337)
+This project created with :heart: by [@nickvourd](https://x.com/nickvourd) && [@S1ckB0y1337](https://x.com/S1ckB0y1337).
+
+Special thanks to [Marios Gyftos](https://www.linkedin.com/in/marios-gyftos-a6b62122/) for his invaluable help during the beta testing phase.
 
 :information_source: Inspired by the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red-team-ops) from [@zeropointsecltd](https://x.com/zeropointsecltd).
 
