@@ -49,12 +49,12 @@ Usage:  COM-Hunter.exe search <CLSID> <options>
     -u, --user                  Search DLL and EXE implementations in HKCU
 
 [+] Classic Persist Mode:
-Usage:  COM-Hunter.exe persist <CLSID> <binary_path> <options>
+Usage:  COM-Hunter.exe persist <CLSID> <binary_path> <option>
     -i, --inprocserver32        Set DLL implementation
     -l, --localserver32         Set EXE implementation
 
 [+] Task Scheduler Mode:
-Usage:  COM-Hunter.exe tasksch <binary_path> <options>
+Usage:  COM-Hunter.exe tasksch <binary_path> <option>
     -i, --inprocserver32        Set DLL implementation
     -l, --localserver32         Set EXE implementation
             ";

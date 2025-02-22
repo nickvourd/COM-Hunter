@@ -23,7 +23,7 @@ namespace COM_Hunter
                     if (command.ToLower() == "tasksch")
                     {
                         // Call method named BuildRegistryKey
-                        var (inprocServer32, localServer32) = Build.BuildRegistryKey(taskSchClsid);
+                        var (inprocServer, localServer) = Build.BuildRegistryKey(taskSchClsid);
 
                         Console.WriteLine("[*] Starting Task Scheduler Mode...\n");
 
@@ -37,7 +37,7 @@ namespace COM_Hunter
                                 Console.WriteLine("[+] Setting InprocServer32...\n");
 
                                 // Call method named CreateRegistryCU
-                                Build.CreateRegistryCU(inprocServer32, path);
+                                Build.CreateRegistryCU(inprocServer, path);
                                 break;
                             case "-l":
                             case "--localserver32":
@@ -47,7 +47,7 @@ namespace COM_Hunter
                                 Console.WriteLine("[+] Setting LocalServer32...\n");
 
                                 // Call method named CreateRegistryCU
-                                Build.CreateRegistryCU(localServer32, path);
+                                Build.CreateRegistryCU(localServer, path);
                                 break;
                             default:
                                 Info.ShowUsage();
@@ -57,7 +57,7 @@ namespace COM_Hunter
                     }else if(command.ToLower() == "search")
                     {
                         // Call method named BuildRegistryKey
-                        var (inprocServer32, localServer32) = Build.BuildRegistryKey(path);
+                        var (inprocsrv32, localsrv32) = Build.BuildRegistryKey(path);
 
                         Console.WriteLine("[*] Starting Search Mode...\n");
 
@@ -66,40 +66,40 @@ namespace COM_Hunter
                             case "-a":
                             case "--all":
                                 // Call method named SearchRegistryLocalMachine
-                                Search.SearchRegistryLocalMachine(inprocServer32);
-                                Search.SearchRegistryLocalMachine(localServer32);
+                                Search.SearchRegistryLocalMachine(inprocsrv32);
+                                Search.SearchRegistryLocalMachine(localsrv32);
 
                                 // Call method named SearchRegistryCurrentUser
-                                Search.SearchRegistryCurrentUser(inprocServer32);
-                                Search.SearchRegistryCurrentUser(localServer32);
+                                Search.SearchRegistryCurrentUser(inprocsrv32);
+                                Search.SearchRegistryCurrentUser(localsrv32);
                                 break;
                             case "-i":
                             case "--inprocserver32":
                                 // Call method named SearchRegistryLocalMachine
-                                Search.SearchRegistryLocalMachine(inprocServer32);
+                                Search.SearchRegistryLocalMachine(inprocsrv32);
 
                                 // Call method named SearchRegistryCurrentUser
-                                Search.SearchRegistryCurrentUser(inprocServer32);
+                                Search.SearchRegistryCurrentUser(inprocsrv32);
                                 break;
                             case "-l":
                             case "--localserver32":
                                 // Call method named SearchRegistryLocalMachine
-                                Search.SearchRegistryLocalMachine(localServer32);
+                                Search.SearchRegistryLocalMachine(localsrv32);
 
                                 // Call method named SearchRegistryCurrentUser
-                                Search.SearchRegistryCurrentUser(localServer32);
+                                Search.SearchRegistryCurrentUser(localsrv32);
                                 break;
                             case "-m":
                             case "--machine":
                                 // Call method named SearchRegistryLocalMachine
-                                Search.SearchRegistryLocalMachine(inprocServer32);
-                                Search.SearchRegistryLocalMachine(localServer32);
+                                Search.SearchRegistryLocalMachine(inprocsrv32);
+                                Search.SearchRegistryLocalMachine(localsrv32);
                                 break;
                             case "-u":
                             case "--user":
                                 // Call method named SearchRegistryCurrentUser
-                                Search.SearchRegistryCurrentUser(inprocServer32);
-                                Search.SearchRegistryCurrentUser(localServer32);
+                                Search.SearchRegistryCurrentUser(inprocsrv32);
+                                Search.SearchRegistryCurrentUser(localsrv32);
                                 break;
                             default:
                                 Info.ShowUsage();
@@ -119,12 +119,12 @@ namespace COM_Hunter
                     string path2 = arguments.ElementAt(2);
                     string option2 = arguments.ElementAt(3);
 
+                    // Build the registry key
+                    var (inprocServer32, localServer32) = Build.BuildRegistryKey(clsid2);
+
                     // Check if the argument is persist
                     if (command2.ToLower() == "persist")
-                    {   
-                        // Build the registry key
-                        var (inprocServer32, localServer32) = Build.BuildRegistryKey(clsid2);
-
+                    {
                         Console.WriteLine("[*] Starting Classic Persist Mode...\n");
                         switch (option2.ToLower())
                         {
@@ -154,10 +154,99 @@ namespace COM_Hunter
                                 break;
                         }
                     }
-                    else
+                    else if (command2.ToLower() == "search")
                     {
-                        Info.ShowUsage();
-                        Settings.ExitCodeMethod(Settings.exitCodeError);
+                        if (path2.ToLower() == "-l" || path2.ToLower() == "--localserver32")
+                        {
+                            switch (option2.ToLower())
+                            {
+                                case "-m":
+                                case "--machine":
+                                    // Call method named SearchRegistryLocalMachine
+                                    Search.SearchRegistryLocalMachine(path2);
+                                    break;
+                                case "-u":
+                                case "--user":
+                                    // Call method named SearchRegistryCurrentUser
+                                    Search.SearchRegistryCurrentUser(path2);
+                                    break;
+                                default:
+                                    Info.ShowUsage();
+                                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                                    break;
+
+                            }
+                        }
+                        else if (path2.ToLower() == "-i" || path2.ToLower() == "--inprocserver32")
+                        {
+                            switch (option2.ToLower())
+                            {
+                                case "-m":
+                                case "--machine":
+                                    // Call method named SearchRegistryLocalMachine
+                                    Search.SearchRegistryLocalMachine(path2);
+                                    break;
+                                case "-u":
+                                case "--user":
+                                    // Call method named SearchRegistryCurrentUser
+                                    Search.SearchRegistryCurrentUser(path2);
+                                    break;
+                                default:
+                                    Info.ShowUsage();
+                                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                                    break;
+                            }
+                        }
+                        else if (path2.ToLower() == "-m" || path2.ToLower() == "--machine")
+                        {
+                            switch (option2.ToLower())
+                            {
+                                case "-i":
+                                case "--inprocserver32":
+                                    // Call method named SearchRegistryLocalMachine
+                                    Search.SearchRegistryLocalMachine(inprocServer32);
+                                    break;
+                                case "-l":
+                                case "--localserver32":
+                                    // Call method named SearchRegistryLocalMachine
+                                    Search.SearchRegistryLocalMachine(localServer32);
+                                    break;
+                                default:
+                                    Info.ShowUsage();
+                                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                                    break;
+                            }
+                        }
+                        else if (path2.ToLower() == "-u" || path2.ToLower() == "--user")
+                        {
+                            switch (option2.ToLower())
+                            {
+                                case "-i":
+                                case "--inprocserver32":
+                                    // Call method named SearchRegistryCurrentUser
+                                    Search.SearchRegistryCurrentUser(inprocServer32);
+                                    break;
+                                case "-l":
+                                case "--localserver32":
+                                    // Call method named SearchRegistryCurrentUser
+                                    Search.SearchRegistryCurrentUser(localServer32);
+                                    break;
+                                default:
+                                    Info.ShowUsage();
+                                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            Info.ShowUsage();
+                            Settings.ExitCodeMethod(Settings.exitCodeError);
+                            break;
+                        }
+                    }
+                    else { 
+                        Info.ShowUsage(); 
+                        Settings.ExitCodeMethod(Settings.exitCodeError); 
                     }
                     break;
                 default:
