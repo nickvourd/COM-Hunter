@@ -111,7 +111,7 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
 :information_source: Perform classic persistence using EXE implementation:
 
 ```
-.\COM-Hunter.exe persist "{AB8902B4-09CA-4bb6-B78D-A8F59079A8D5}" C:\Users\victim\Desktop\implant.dll --localserver32
+.\COM-Hunter.exe persist "{AB8902B4-09CA-4bb6-B78D-A8F59079A8D5}" C:\Users\victim\Desktop\implant.exe --localserver32
 ```
 
 :information_source: Perform persistence via Task Scheduler using DLL implementation:
