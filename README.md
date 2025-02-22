@@ -96,6 +96,12 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
 .\COM-Hunter.exe search "{01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}" -l --machine
 ```
 
+:information_source: Search EXE and DLL implementations in HKCU:
+
+```
+.\COM-Hunter.exe search AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 --user
+```
+
 :information_source: Perform classic persistence using DLL implementation:
 
 ```
