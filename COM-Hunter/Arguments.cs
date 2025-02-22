@@ -1,253 +1,254 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace COM_Hunter
 {
     internal class Arguments
     {
-        public Arguments(List<string> arguments) {
+        private const string TaskSchClsid = "{01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}";
 
-            switch (arguments.Count)
+        public Arguments(List<string> arguments)
+        {
+            if (arguments == null || arguments.Count < 3 || arguments.Count > 4)
             {
-                case 3:
-                    string command = arguments.ElementAt(0);
-                    string path = arguments.ElementAt(1);
-                    string option = arguments.ElementAt(2);
-                    const string taskSchClsid = "{01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}";
+                Info.ShowUsage();
+                Settings.ExitCodeMethod(Settings.exitCodeError);
+                return;
+            }
 
-                    // Check if the argument is tasksch
-                    if (command.ToLower() == "tasksch")
-                    {
-                        // Call method named BuildRegistryKey
-                        var (inprocServer, localServer) = Build.BuildRegistryKey(taskSchClsid);
+            string command = arguments[0].ToLower();
 
-                        Console.WriteLine("[*] Starting Task Scheduler Mode...\n");
+            // Handle commands based on argument count
+            if (arguments.Count == 3)
+                HandleThreeArguments(command, arguments[1], arguments[2]);
+            else
+                HandleFourArguments(command, arguments[1], arguments[2], arguments[3]);
+        }
 
-                        switch (option.ToLower())
-                        {
-                            case "-i":
-                            case "--inprocserver32":
-                                // Call method named CheckExtension
-                                Check.CheckExtension(path, "InprocServer32");
-
-                                Console.WriteLine("[+] Setting InprocServer32...\n");
-
-                                // Call method named CreateRegistryCU
-                                Build.CreateRegistryCU(inprocServer, path);
-                                break;
-                            case "-l":
-                            case "--localserver32":
-                                // Call method named CheckExtension
-                                Check.CheckExtension(path, "LocalServer32");
-
-                                Console.WriteLine("[+] Setting LocalServer32...\n");
-
-                                // Call method named CreateRegistryCU
-                                Build.CreateRegistryCU(localServer, path);
-                                break;
-                            default:
-                                Info.ShowUsage();
-                                Settings.ExitCodeMethod(Settings.exitCodeError);
-                                break;
-                        }
-                    }else if(command.ToLower() == "search")
-                    {
-                        // Call method named BuildRegistryKey
-                        var (inprocsrv32, localsrv32) = Build.BuildRegistryKey(path);
-
-                        Console.WriteLine("[*] Starting Search Mode...\n");
-
-                        switch (option.ToLower())
-                        {
-                            case "-a":
-                            case "--all":
-                                // Call method named SearchRegistryLocalMachine
-                                Search.SearchRegistryLocalMachine(inprocsrv32);
-                                Search.SearchRegistryLocalMachine(localsrv32);
-
-                                // Call method named SearchRegistryCurrentUser
-                                Search.SearchRegistryCurrentUser(inprocsrv32);
-                                Search.SearchRegistryCurrentUser(localsrv32);
-                                break;
-                            case "-i":
-                            case "--inprocserver32":
-                                // Call method named SearchRegistryLocalMachine
-                                Search.SearchRegistryLocalMachine(inprocsrv32);
-
-                                // Call method named SearchRegistryCurrentUser
-                                Search.SearchRegistryCurrentUser(inprocsrv32);
-                                break;
-                            case "-l":
-                            case "--localserver32":
-                                // Call method named SearchRegistryLocalMachine
-                                Search.SearchRegistryLocalMachine(localsrv32);
-
-                                // Call method named SearchRegistryCurrentUser
-                                Search.SearchRegistryCurrentUser(localsrv32);
-                                break;
-                            case "-m":
-                            case "--machine":
-                                // Call method named SearchRegistryLocalMachine
-                                Search.SearchRegistryLocalMachine(inprocsrv32);
-                                Search.SearchRegistryLocalMachine(localsrv32);
-                                break;
-                            case "-u":
-                            case "--user":
-                                // Call method named SearchRegistryCurrentUser
-                                Search.SearchRegistryCurrentUser(inprocsrv32);
-                                Search.SearchRegistryCurrentUser(localsrv32);
-                                break;
-                            default:
-                                Info.ShowUsage();
-                                Settings.ExitCodeMethod(Settings.exitCodeError);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        Info.ShowUsage();
-                        Settings.ExitCodeMethod(Settings.exitCodeError);
-                    }
+        private void HandleThreeArguments(string command, string path, string option)
+        {
+            switch (command)
+            {
+                case "tasksch":
+                    HandleTaskSchedulerMode(path, option);
                     break;
-                case 4:
-                    string command2 = arguments.ElementAt(0);
-                    string clsid2 = arguments.ElementAt(1);
-                    string path2 = arguments.ElementAt(2);
-                    string option2 = arguments.ElementAt(3);
+                case "search":
+                    HandleSearchMode(path, option);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
 
-                    // Build the registry key
-                    var (inprocServer32, localServer32) = Build.BuildRegistryKey(clsid2);
+        private void HandleTaskSchedulerMode(string path, string option)
+        {
+            var (inprocServer, localServer) = Build.BuildRegistryKey(TaskSchClsid);
+            Console.WriteLine("[*] Starting Task Scheduler Mode...\n");
 
-                    // Check if the argument is persist
-                    if (command2.ToLower() == "persist")
-                    {
-                        Console.WriteLine("[*] Starting Classic Persist Mode...\n");
-                        switch (option2.ToLower())
-                        {
-                            case "-i":
-                            case "--inprocserver32":
-                                // Call method named CheckExtension
-                                Check.CheckExtension(path2, "InprocServer32");
+            switch (option.ToLower())
+            {
+                case "-i":
+                case "--inprocserver32":
+                    HandleServerSetting(path, "InprocServer32", inprocServer);
+                    break;
+                case "-l":
+                case "--localserver32":
+                    HandleServerSetting(path, "LocalServer32", localServer);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
 
-                                Console.WriteLine("[*] Building HKCU key with InprocServer32...\n");
+        private void HandleServerSetting(string path, string serverType, string serverKey)
+        {
+            Check.CheckExtension(path, serverType);
+            Build.CreateRegistryCU(serverKey, path);
+        }
 
-                                // Call method named CreateRegistryCU
-                                Build.CreateRegistryCU(inprocServer32, path2);
-                                break;
-                            case "-l":
-                            case "--localserver32":
-                                // Call method named CheckExtension
-                                Check.CheckExtension(path2, "LocalServer32");
+        private void HandleSearchMode(string clsid, string option)
+        {
+            var (inprocsrv32, localsrv32) = Build.BuildRegistryKey(clsid);
+            Console.WriteLine("[*] Starting Search Mode...\n");
 
-                                Console.WriteLine("[*] Building HKCU key with LocalServer32...\n");
+            switch (option.ToLower())
+            {
+                case "-a":
+                case "--all":
+                    SearchBoth(inprocsrv32, localsrv32, true, true);
+                    break;
+                case "-i":
+                case "--inprocserver32":
+                    SearchBoth(inprocsrv32, null, true, true);
+                    break;
+                case "-l":
+                case "--localserver32":
+                    SearchBoth(null, localsrv32, true, true);
+                    break;
+                case "-m":
+                case "--machine":
+                    SearchBoth(inprocsrv32, localsrv32, true, false);
+                    break;
+                case "-u":
+                case "--user":
+                    SearchBoth(inprocsrv32, localsrv32, false, true);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
 
-                                // Call method named CreateRegistryCU
-                                Build.CreateRegistryCU(localServer32, path2);
-                                break;
-                            default:
-                                Info.ShowUsage();
-                                Settings.ExitCodeMethod(Settings.exitCodeError);
-                                break;
-                        }
-                    }
-                    else if (command2.ToLower() == "search")
-                    {
-                        if (path2.ToLower() == "-l" || path2.ToLower() == "--localserver32")
-                        {
-                            switch (option2.ToLower())
-                            {
-                                case "-m":
-                                case "--machine":
-                                    // Call method named SearchRegistryLocalMachine
-                                    Search.SearchRegistryLocalMachine(path2);
-                                    break;
-                                case "-u":
-                                case "--user":
-                                    // Call method named SearchRegistryCurrentUser
-                                    Search.SearchRegistryCurrentUser(path2);
-                                    break;
-                                default:
-                                    Info.ShowUsage();
-                                    Settings.ExitCodeMethod(Settings.exitCodeError);
-                                    break;
+        private void SearchBoth(string inprocServer, string localServer, bool searchMachine, bool searchUser)
+        {
+            if (inprocServer != null)
+            {
+                if (searchMachine)
+                {
+                    Search.SearchRegistryLocalMachine(inprocServer);
+                }
+                if (searchUser)
+                {
+                    Search.SearchRegistryCurrentUser(inprocServer);
+                }
+            }
 
-                            }
-                        }
-                        else if (path2.ToLower() == "-i" || path2.ToLower() == "--inprocserver32")
-                        {
-                            switch (option2.ToLower())
-                            {
-                                case "-m":
-                                case "--machine":
-                                    // Call method named SearchRegistryLocalMachine
-                                    Search.SearchRegistryLocalMachine(path2);
-                                    break;
-                                case "-u":
-                                case "--user":
-                                    // Call method named SearchRegistryCurrentUser
-                                    Search.SearchRegistryCurrentUser(path2);
-                                    break;
-                                default:
-                                    Info.ShowUsage();
-                                    Settings.ExitCodeMethod(Settings.exitCodeError);
-                                    break;
-                            }
-                        }
-                        else if (path2.ToLower() == "-m" || path2.ToLower() == "--machine")
-                        {
-                            switch (option2.ToLower())
-                            {
-                                case "-i":
-                                case "--inprocserver32":
-                                    // Call method named SearchRegistryLocalMachine
-                                    Search.SearchRegistryLocalMachine(inprocServer32);
-                                    break;
-                                case "-l":
-                                case "--localserver32":
-                                    // Call method named SearchRegistryLocalMachine
-                                    Search.SearchRegistryLocalMachine(localServer32);
-                                    break;
-                                default:
-                                    Info.ShowUsage();
-                                    Settings.ExitCodeMethod(Settings.exitCodeError);
-                                    break;
-                            }
-                        }
-                        else if (path2.ToLower() == "-u" || path2.ToLower() == "--user")
-                        {
-                            switch (option2.ToLower())
-                            {
-                                case "-i":
-                                case "--inprocserver32":
-                                    // Call method named SearchRegistryCurrentUser
-                                    Search.SearchRegistryCurrentUser(inprocServer32);
-                                    break;
-                                case "-l":
-                                case "--localserver32":
-                                    // Call method named SearchRegistryCurrentUser
-                                    Search.SearchRegistryCurrentUser(localServer32);
-                                    break;
-                                default:
-                                    Info.ShowUsage();
-                                    Settings.ExitCodeMethod(Settings.exitCodeError);
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            Info.ShowUsage();
-                            Settings.ExitCodeMethod(Settings.exitCodeError);
-                            break;
-                        }
-                    }
-                    else { 
-                        Info.ShowUsage(); 
-                        Settings.ExitCodeMethod(Settings.exitCodeError); 
-                    }
+            if (localServer != null)
+            {
+                if (searchMachine)
+                {
+                    Search.SearchRegistryLocalMachine(localServer);
+                }
+                if (searchUser)
+                {
+                    Search.SearchRegistryCurrentUser(localServer);
+                }
+            }
+        }
+
+        private void HandleFourArguments(string command, string clsid, string path, string option)
+        {
+            var (inprocServer32, localServer32) = Build.BuildRegistryKey(clsid);
+
+            if (command == "persist")
+            {
+                HandlePersistMode(inprocServer32, localServer32, path, option);
+            }
+            else if (command == "search")
+            {
+                Console.WriteLine("[*] Starting Advanced Search Mode...\n");
+                HandleAdvancedSearchMode(inprocServer32, localServer32, path, option);
+            }
+            else
+            {
+                Info.ShowUsage();
+                Settings.ExitCodeMethod(Settings.exitCodeError);
+            }
+        }
+
+        private void HandlePersistMode(string inprocServer32, string localServer32, string path, string option)
+        {
+            Console.WriteLine("[*] Starting Classic Persist Mode...\n");
+
+            switch (option.ToLower())
+            {
+                case "-i":
+                case "--inprocserver32":
+                    HandleServerSetting(path, "InprocServer32", inprocServer32);
+                    break;
+                case "-l":
+                case "--localserver32":
+                    HandleServerSetting(path, "LocalServer32", localServer32);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
+
+        private void HandleAdvancedSearchMode(string inprocServer32, string localServer32, string path, string option)
+        {
+            // Maps options to their normalized values and handlers
+            Dictionary<string, (string normalized, Action action)> optionMap = new Dictionary<string, (string, Action)>
+            {
+                {"-l", ("localserver", () => HandleServerOption(localServer32, option))},
+                {"--localserver32", ("localserver", () => HandleServerOption(localServer32, option))},
+                {"-i", ("inprocserver", () => HandleServerOption(inprocServer32, option))},
+                {"--inprocserver32", ("inprocserver", () => HandleServerOption(inprocServer32, option))},
+                {"-m", ("machine", () => HandleMachineOption(inprocServer32, localServer32, option))},
+                {"--machine", ("machine", () => HandleMachineOption(inprocServer32, localServer32, option))},
+                {"-u", ("user", () => HandleUserOption(inprocServer32, localServer32, option))},
+                {"--user", ("user", () => HandleUserOption(inprocServer32, localServer32, option))}
+            };
+
+            // Get the action based on the path option
+            if (optionMap.TryGetValue(path.ToLower(), out var pathAction))
+            {
+                pathAction.action();
+            }
+            else
+            {
+                Info.ShowUsage();
+                Settings.ExitCodeMethod(Settings.exitCodeError);
+            }
+        }
+
+        private void HandleServerOption(string serverKey, string locationOption)
+        {
+            switch (locationOption.ToLower())
+            {
+                case "-m":
+                case "--machine":
+                    Search.SearchRegistryLocalMachine(serverKey);
+                    break;
+                case "-u":
+                case "--user":
+                    Search.SearchRegistryCurrentUser(serverKey);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
+
+        private void HandleMachineOption(string inprocServer, string localServer, string serverOption)
+        {
+            switch (serverOption.ToLower())
+            {
+                case "-i":
+                case "--inprocserver32":
+                    Search.SearchRegistryLocalMachine(inprocServer);
+                    break;
+                case "-l":
+                case "--localserver32":
+                    Search.SearchRegistryLocalMachine(localServer);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
+
+        private void HandleUserOption(string inprocServer, string localServer, string serverOption)
+        {
+            switch (serverOption.ToLower())
+            {
+                case "-i":
+                case "--inprocserver32":
+                    Search.SearchRegistryCurrentUser(inprocServer);
+                    break;
+                case "-l":
+                case "--localserver32":
+                    Search.SearchRegistryCurrentUser(localServer);
                     break;
                 default:
                     Info.ShowUsage();
