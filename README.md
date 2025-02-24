@@ -47,7 +47,7 @@ The authors and contributors of this project are not liable for any illegal use 
  
 This project created with :heart: by [@nickvourd](https://x.com/nickvourd) && [@S1ckB0y1337](https://x.com/S1ckB0y1337).
 
-Special thanks to [Marios Gyftos](https://www.linkedin.com/in/marios-gyftos-a6b62122/) for his invaluable assistance during the beta testing phase of this tool.
+Special thanks to my friend [Marios Gyftos](https://www.linkedin.com/in/marios-gyftos-a6b62122/) for his invaluable assistance during the beta testing phase of this tool.
 
 Inspired by the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red-team-ops) from [@zeropointsecltd](https://x.com/zeropointsecltd).
 
