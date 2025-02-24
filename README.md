@@ -5,7 +5,7 @@ COM Hijacking VOODOO
 <p align="center">
   <img width="500" height="400" src="/Pictures/logo2.png"><br /><br />
   <img alt="GitHub License" src="https://img.shields.io/github/license/nickvourd/COM-Hunter?style=social&logo=GitHub&logoColor=purple">
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/nickvourd/COM-Hunter?logoColor=yellow">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/nickvourd/COM-Hunter?logoColor=yellow"><br />
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/nickvourd/COM-Hunter?logoColor=red">
   <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/nickvourd/COM-Hunter?logoColor=blue">
   <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/nickvourd/COM-Hunter?style=social&logo=GitHub&logoColor=green">
@@ -23,20 +23,28 @@ The following list explains the available modes:
 - **Classic Persist Mode**: Performs classic COM hijacking persistence using `LocalServer32` or `InprocServer32`.
 - **Task Scheduler Mode**: Automatically establishes COM hijacking persistence via Task Scheduler using `LocalServer32` or `InprocServer32`.
 
-This project created with :heart: by [@nickvourd](https://x.com/nickvourd) && [@S1ckB0y1337](https://x.com/S1ckB0y1337).
+## Disclaimer
 
-Special thanks to [Marios Gyftos](https://www.linkedin.com/in/marios-gyftos-a6b62122/) for his invaluable assistance during the beta testing phase of this tool.
-
-:information_source: Inspired by the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red-team-ops) from [@zeropointsecltd](https://x.com/zeropointsecltd).
+The authors and contributors of this project are not liable for any illegal use of the tool. It is intended for educational purposes only. Users are responsible for ensuring lawful usage.
 
 ## Table of Contents
 
 - [COM-Hunter](#com-hunter)
     - [Description](#description)
+    - [Disclaimer](#disclaimer)
     - [Table of Contents](#table-of-contents)
+    - [Acknowledgement](#acknowledgement)
     - [Usage](#usage)
     - [Examples](#examples)
     - [References](#references)
+
+## Acknowledgement
+ 
+This project created with :heart: by [@nickvourd](https://x.com/nickvourd) && [@S1ckB0y1337](https://x.com/S1ckB0y1337).
+
+Special thanks to [Marios Gyftos](https://www.linkedin.com/in/marios-gyftos-a6b62122/) for his invaluable assistance during the beta testing phase of this tool.
+
+:information_source: Inspired by the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red-team-ops) from [@zeropointsecltd](https://x.com/zeropointsecltd).
 
 ## Usage
 
