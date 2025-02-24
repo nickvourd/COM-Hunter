@@ -46,7 +46,7 @@ This project created with :heart: by [@nickvourd](https://x.com/nickvourd) && [@
 
 Special thanks to [Marios Gyftos](https://www.linkedin.com/in/marios-gyftos-a6b62122/) for his invaluable assistance during the beta testing phase of this tool.
 
-:information_source: Inspired by the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red-team-ops) from [@zeropointsecltd](https://x.com/zeropointsecltd).
+Inspired by the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red-team-ops) from [@zeropointsecltd](https://x.com/zeropointsecltd).
 
 ## Usage
 
