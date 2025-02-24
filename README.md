@@ -26,6 +26,8 @@ The following list explains the available modes:
 - **Classic Persist Mode**: Performs classic COM hijacking persistence using `LocalServer32` or `InprocServer32`.
 - **Task Scheduler Mode**: Automatically establishes COM hijacking persistence via Task Scheduler using `LocalServer32` or `InprocServer32`.
 
+> If you find any bugs, don’t hesitate to [report them](https://github.com/nickvourd/COM-Hunter/issues). Your feedback is valuable in improving the quality of this project!
+
 ## Disclaimer
 
 The authors and contributors of this project are not liable for any illegal use of the tool. It is intended for educational purposes only. Users are responsible for ensuring lawful usage.
