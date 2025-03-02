@@ -22,9 +22,10 @@ COM-Hunter is a COM Hijacking persistnce tool written in C#.
 
 The following list explains the available modes:
 
-- **Search Mode**: Searches for CLSIDs based on `InprocServer32`, `LocalServer32`, and registry hives `HKLM` and `HKCU`.
+- **Search Mode**: Searches for CLSIDs based on `LocalServer32`, `InprocServer32`, and registry hives `HKLM` and `HKCU`.
 - **Classic Persist Mode**: Performs classic COM hijacking persistence using `LocalServer32` or `InprocServer32`.
 - **Task Scheduler Mode**: Automatically establishes COM hijacking persistence via Task Scheduler using `LocalServer32` or `InprocServer32`.
+- **TreatAs Mode**: Performs COM hijacking persistence via the TreatAs registry key and a fake (forwardable) CLSID using `LocalServer32` or `InprocServer32`.
 
 > If you find any bugs, don’t hesitate to [report them](https://github.com/nickvourd/COM-Hunter/issues). Your feedback is valuable in improving the quality of this project!
 
@@ -141,7 +142,7 @@ Usage:  COM-Hunter.exe treatas <CLSID> <fake_CLSID> <binary_path> <option>
 .\COM-Hunter.exe tasksch C:\Users\victim\Desktop\implant.dll --inprocserver32
 ```
 
-:information_source: Perform persistence via the TreatAs registry key and a fake (non-forwardable) CLSID using DLL implementation:
+:information_source: Perform persistence via the TreatAs registry key and a fake (forwardable) CLSID using DLL implementation:
 
 ```
 .\COM-Hunter.exe treatas AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 "{00000012-1312-1109-2605-F38D1EBDCBE1}" C:\Users\victim\Desktop\implant.dll -i
