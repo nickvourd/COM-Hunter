@@ -68,7 +68,7 @@ Inspired by the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red
 
 Usage: COM-Hunter.exe <mode> <options>
 
-[+] Modes:
+[+] Available Modes:
     search             Search Mode
     persist            Classic Persist Mode
     tasksch            Task Scheduler Mode
