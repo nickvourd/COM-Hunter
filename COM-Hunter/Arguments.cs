@@ -10,20 +10,32 @@ namespace COM_Hunter
 
         public Arguments(List<string> arguments)
         {
-            if (arguments == null || arguments.Count < 3 || arguments.Count > 4)
+            if (arguments.Count < 3 || arguments.Count > 5)
             {
                 Info.ShowUsage();
                 Settings.ExitCodeMethod(Settings.exitCodeError);
-                return;
+                //return;
             }
 
             string command = arguments[0].ToLower();
 
-            // Handle commands based on argument count
-            if (arguments.Count == 3)
-                HandleThreeArguments(command, arguments[1], arguments[2]);
-            else
-                HandleFourArguments(command, arguments[1], arguments[2], arguments[3]);
+            switch (arguments.Count)
+            {
+                case 3:
+                    HandleThreeArguments(command, arguments[1], arguments[2]);
+                    break;
+                case 4:
+                    HandleFourArguments(command, arguments[1], arguments[2], arguments[3]);
+                    break;
+                case 5:
+                    HandleFiveArguments(command, arguments[1], arguments[2], arguments[3], arguments[4]);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+           
         }
 
         private void HandleThreeArguments(string command, string path, string option)
@@ -249,6 +261,47 @@ namespace COM_Hunter
                 case "-l":
                 case "--localserver32":
                     Search.SearchRegistryCurrentUser(localServer);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
+
+        private void HandleFiveArguments(string command, string clsid, string fakeClsid, string path, string option)
+        {
+            var treatAs = Build.BuildTreatAsKey(clsid);
+            var (inprocServer32, localServer32) = Build.BuildRegistryKey(fakeClsid);
+            var trimmeddClsid = Build.TrimClsid(fakeClsid);
+
+            switch (command)
+            {
+                case "treatas":
+                    HandleTreatAsPersistMode(inprocServer32, localServer32, treatAs, trimmeddClsid, path, option);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
+
+        private void HandleTreatAsPersistMode(string inprocServer32, string localServer32, string treatAs, string trimmedClsid, string path, string option)
+        {
+            Console.WriteLine("[*] Starting TreatAs Persist Mode...\n");
+
+            switch (option.ToLower())
+            {
+                case "-i":
+                case "--inprocserver32":
+                    HandleServerSetting(path, "InprocServer32", inprocServer32);
+                    Build.CreateTreatAsRegistryCU(treatAs, trimmedClsid);
+                    break;
+                case "-l":
+                case "--localserver32":
+                    HandleServerSetting(path, "LocalServer32", localServer32);
+                    Build.CreateTreatAsRegistryCU(treatAs, trimmedClsid);
                     break;
                 default:
                     Info.ShowUsage();
