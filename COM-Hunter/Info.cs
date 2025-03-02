@@ -35,7 +35,7 @@ namespace COM_Hunter
             var usage = @"
 Usage: COM_Hunter.exe <mode> <options>
 
-[+] Modes:
+[+] Available Modes:
     search             Search Mode
     persist            Classic Persist Mode
     tasksch            Task Scheduler Mode
