@@ -9,7 +9,7 @@ void SearchRegistryLocalMachine(char* hKeyPath){
     DWORD dwSize = sizeof(szValue);
     DWORD dwType = REG_SZ;
 
-    lRes = ADVAPI32$RegOpenKeyExA(HKEY_LOCAL_MACHINE, hKeyPath, 0, KEY_READ | KEY_WOW64_64KEY, &hKey);
+    lRes = ADVAPI32$RegOpenKeyExA(HKEY_LOCAL_MACHINE, hKeyPath, 0, KEY_READ, &hKey);
     if (lRes == ERROR_SUCCESS) {
         // Read the default value from the key
         lRes = ADVAPI32$RegQueryValueExA(hKey, "", NULL, &dwType, (LPBYTE)szValue, &dwSize);
