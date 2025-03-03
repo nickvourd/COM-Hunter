@@ -161,7 +161,7 @@ char* BuildTreatAsKey(char* clsid){
 
     if (cleanedCLSID == NULL) {
         BeaconPrintf(CALLBACK_ERROR, "[-] Failed to format CLSID.\n");
-        return rKeys;
+        return NULL;
     }
     // Calculate the total length needed for the formatted CLSID
     size_t totalLength = strlen(cleanedCLSID) + 4; // 4 for the brackets {{}}
