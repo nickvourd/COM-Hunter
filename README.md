@@ -20,10 +20,11 @@ COM-Hunter is a COM Hijacking persistnce tool written in C#.
 
 The following list explains the available modes:
 
-- **Search Mode**: Searches for CLSIDs based on `LocalServer32`, `InprocServer32`, and registry hives `HKLM` and `HKCU`.
+- **Search Mode**: Searches for CLSIDs based on `LocalServer32`, `InprocServer32`, and registry entries under both `HKLM` and `HKCU`.
 - **Classic Persist Mode**: Performs classic COM hijacking persistence using `LocalServer32` or `InprocServer32`.
 - **Task Scheduler Mode**: Automatically establishes COM hijacking persistence via Task Scheduler using `LocalServer32` or `InprocServer32`.
 - **TreatAs Mode**: Performs COM hijacking persistence via the TreatAs registry key and a fake (forwardable) CLSID using `LocalServer32` or `InprocServer32`.
+- **Remove Mode**: Removes persistence mechanisms that rely on `LocalServer32`, `InprocServer32`, and related registry entries under both `HKLM` and `HKCU`.
 
 > If you find any bugs, don’t hesitate to [report them](https://github.com/nickvourd/COM-Hunter/issues). Your feedback is valuable in improving the quality of this project!
 
