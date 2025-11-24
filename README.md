@@ -16,7 +16,7 @@ COM Hijacking VOODOO
 COM-Hunter is a COM Hijacking persistnce tool written in C#.
 
 ![Static Badge](https://img.shields.io/badge/.NET-4.8-blue?style=flat&logoSize=auto)
-![Static Badge](https://img.shields.io/badge/Version-2.0%20-red?link=https%3A%2F%2Fgithub.com%2Fnickvourd%2FCOM-Hunter%2Freleases)
+![Static Badge](https://img.shields.io/badge/Version-3.0%20-red?link=https%3A%2F%2Fgithub.com%2Fnickvourd%2FCOM-Hunter%2Freleases)
 
 The following list explains the available modes:
 
@@ -60,17 +60,18 @@ Inspired by the [RTO course](https://courses.zeropointsecurity.co.uk/courses/red
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║      ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝      ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 
-                                   Version: 2.0
+                                   Version: 3.0
                              @nickvourd && @S1ckB0y1337
                   ~ Inspired during the RTO course by @zeropointsecltd ~
 
-Usage: COM-Hunter.exe <mode> <options>
+Usage: COM_Hunter.exe <mode> <options>
 
 [+] Available Modes:
     search             Search Mode
     persist            Classic Persist Mode
     tasksch            Task Scheduler Mode
     treatas            TreatAs Mode
+    remove             Remove Mode
 
 [+] Search Mode:
 Usage:  COM-Hunter.exe search <CLSID> <options>
@@ -94,6 +95,14 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
 Usage:  COM-Hunter.exe treatas <CLSID> <fake_CLSID> <binary_path> <option>
     -i, --inprocserver32        Set DLL implementation
     -l, --localserver32         Set EXE implementation
+
+[+] Remove Mode:
+Usage:  COM-Hunter.exe remove <CLSID> <options>
+    -a, --all                   Remove DLL and EXE implementations in HKLM and HKCU
+    -i, --inprocserver32        Remove DLL implementations in HKLM and HKCU
+    -l, --localserver32         Remove EXE implementations in HKLM and HKCU
+    -m, --machine               Remove DLL and EXE implementations in HKLM
+    -u, --user                  Remove DLL and EXE implementations in HKCU
 ```
 
 ## Examples
@@ -144,6 +153,12 @@ Usage:  COM-Hunter.exe treatas <CLSID> <fake_CLSID> <binary_path> <option>
 
 ```
 .\COM-Hunter.exe treatas AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 "{00000012-1312-1997-2605-F38D1EBDCBE1}" C:\Users\victim\Desktop\implant.dll -i
+```
+
+:information_source: Remove DLL implementation persistence in HKCU using:
+
+```
+.\COM-Hunter.exe remove AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 -i -u
 ```
 
 ## References
