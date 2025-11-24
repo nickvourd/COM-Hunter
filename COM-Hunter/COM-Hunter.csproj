@@ -67,6 +67,7 @@
     <Compile Include="Build.cs" />
     <Compile Include="Check.cs" />
     <Compile Include="Info.cs" />
+    <Compile Include="Remove.cs" />
     <Compile Include="Search.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Program.cs" />

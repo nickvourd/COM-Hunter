@@ -39,6 +39,8 @@ Usage: COM_Hunter.exe <mode> <options>
     search             Search Mode
     persist            Classic Persist Mode
     tasksch            Task Scheduler Mode
+    treatas            TreatAs Mode
+    remove             Remove Mode
 
 [+] Search Mode:
 Usage:  COM-Hunter.exe search <CLSID> <options>
@@ -62,7 +64,15 @@ Usage:  COM-Hunter.exe tasksch <binary_path> <option>
 Usage:  COM-Hunter.exe treatas <CLSID> <fake_CLSID> <binary_path> <option>
     -i, --inprocserver32        Set DLL implementation
     -l, --localserver32         Set EXE implementation
-            ";
+            
+[+] Remove Mode:
+Usage:  COM-Hunter.exe remove <CLSID> <options>
+    -a, --all                   Remove DLL and EXE implementations in HKLM and HKCU
+    -i, --inprocserver32        Remove DLL implementations in HKLM and HKCU
+    -l, --localserver32         Remove EXE implementations in HKLM and HKCU
+    -m, --machine               Remove DLL and EXE implementations in HKLM
+    -u, --user                  Remove DLL and EXE implementations in HKCU
+";
 
             Console.WriteLine(usage);
         }

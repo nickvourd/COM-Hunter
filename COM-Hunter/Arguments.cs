@@ -48,6 +48,9 @@ namespace COM_Hunter
                 case "search":
                     HandleSearchMode(path, option);
                     break;
+                case "remove":
+                    HandleRemoveMode(path, option);
+                    break;
                 default:
                     Info.ShowUsage();
                     Settings.ExitCodeMethod(Settings.exitCodeError);
@@ -144,6 +147,65 @@ namespace COM_Hunter
             }
         }
 
+        private void HandleRemoveMode(string clsid, string option)
+        {
+            var (inprocServer32, localServer32) = Build.BuildRegistryKey(clsid);
+            Console.WriteLine("[*] Starting Remove Mode...\n");
+            switch (option.ToLower())
+            {
+                case "-a":
+                case "--all":
+                    RemoveRegistryEntries(inprocServer32, localServer32, true, true);
+                    break;
+                case "-i":
+                case "--inprocserver32":
+                    RemoveRegistryEntries(inprocServer32, null, true, true);
+                    break;
+                case "-l":
+                case "--localserver32":
+                    RemoveRegistryEntries(null, localServer32, true, true);
+                    break;
+                case "-m":
+                case "--machine":
+                    RemoveRegistryEntries(inprocServer32, localServer32, true, false);
+                    break;
+                case "-u": 
+                case "--user":
+                    RemoveRegistryEntries(inprocServer32, localServer32, false, true);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
+
+        private void RemoveRegistryEntries(string inprocServer, string localServer, bool removeMachine, bool removeUser)
+        {
+            if (inprocServer != null)
+            {
+                if (removeMachine)
+                {
+                    Remove.RemoveRegistryLocalMachine(inprocServer);
+                }
+                if (removeUser)
+                {
+                    Remove.RemoveRegistryCurrentUser(inprocServer);
+                }
+            }
+            if (localServer != null)
+            {
+                if (removeMachine)
+                {
+                    Remove.RemoveRegistryLocalMachine(localServer);
+                }
+                if (removeUser)
+                {
+                    Remove.RemoveRegistryCurrentUser(localServer);
+                }
+            }
+        }
+
         private void HandleFourArguments(string command, string clsid, string path, string option)
         {
             var (inprocServer32, localServer32) = Build.BuildRegistryKey(clsid);
@@ -156,6 +218,11 @@ namespace COM_Hunter
             {
                 Console.WriteLine("[*] Starting Advanced Search Mode...\n");
                 HandleAdvancedSearchMode(inprocServer32, localServer32, path, option);
+            }
+            else if (command == "remove")
+            {
+                Console.WriteLine("[*] Starting Advanced Remove Mode...\n");
+                HandleAdvancedRemoveMode(inprocServer32, localServer32, path, option);
             }
             else
             {
@@ -212,6 +279,32 @@ namespace COM_Hunter
             }
         }
 
+        private void HandleAdvancedRemoveMode(string inprocServer32, string localServer32, string path, string option)
+        {
+            // Maps options to their normalized values and handlers
+            Dictionary<string, (string normalized, Action action)> optionMap = new Dictionary<string, (string, Action)>
+            {
+                {"-l", ("localserver", () => HandleRemoveServerOption(localServer32, option))},
+                {"--localserver32", ("localserver", () => HandleRemoveServerOption(localServer32, option))},
+                {"-i", ("inprocserver", () => HandleRemoveServerOption(inprocServer32, option))},
+                {"--inprocserver32", ("inprocserver", () => HandleRemoveServerOption(inprocServer32, option))},
+                {"-m", ("machine", () => HandleRemoveMachineOption(inprocServer32, localServer32, option))},
+                {"--machine", ("machine", () => HandleRemoveMachineOption(inprocServer32, localServer32, option))},
+                {"-u", ("user", () => HandleRemoveUserOption(inprocServer32, localServer32, option))},
+                {"--user", ("user", () => HandleRemoveUserOption(inprocServer32, localServer32, option))}
+            };
+            // Get the action based on the path option
+            if (optionMap.TryGetValue(path.ToLower(), out var pathAction))
+            {
+                pathAction.action();
+            }
+            else
+            {
+                Info.ShowUsage();
+                Settings.ExitCodeMethod(Settings.exitCodeError);
+            }
+        }
+
         private void HandleServerOption(string serverKey, string locationOption)
         {
             switch (locationOption.ToLower())
@@ -223,6 +316,25 @@ namespace COM_Hunter
                 case "-u":
                 case "--user":
                     Search.SearchRegistryCurrentUser(serverKey);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
+
+        private void HandleRemoveServerOption(string serverKey, string locationOption)
+        {
+            switch (locationOption.ToLower())
+            {
+                case "-m":
+                case "--machine":
+                    Remove.RemoveRegistryLocalMachine(serverKey);
+                    break;
+                case "-u":
+                case "--user":
+                    Remove.RemoveRegistryCurrentUser(serverKey);
                     break;
                 default:
                     Info.ShowUsage();
@@ -250,6 +362,25 @@ namespace COM_Hunter
             }
         }
 
+        private void HandleRemoveMachineOption(string inprocServer, string localServer, string serverOption)
+        {
+            switch (serverOption.ToLower())
+            {
+                case "-i":
+                case "--inprocserver32":
+                    Remove.RemoveRegistryLocalMachine(inprocServer);
+                    break;
+                case "-l":
+                case "--localserver32":
+                    Remove.RemoveRegistryLocalMachine(localServer);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
+
         private void HandleUserOption(string inprocServer, string localServer, string serverOption)
         {
             switch (serverOption.ToLower())
@@ -261,6 +392,25 @@ namespace COM_Hunter
                 case "-l":
                 case "--localserver32":
                     Search.SearchRegistryCurrentUser(localServer);
+                    break;
+                default:
+                    Info.ShowUsage();
+                    Settings.ExitCodeMethod(Settings.exitCodeError);
+                    break;
+            }
+        }
+
+        private void HandleRemoveUserOption(string inprocServer, string localServer, string serverOption)
+        {
+            switch (serverOption.ToLower())
+            {
+                case "-i":
+                case "--inprocserver32":
+                    Remove.RemoveRegistryCurrentUser(inprocServer);
+                    break;
+                case "-l":
+                case "--localserver32":
+                    Remove.RemoveRegistryCurrentUser(localServer);
                     break;
                 default:
                     Info.ShowUsage();
