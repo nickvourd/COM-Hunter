@@ -13,7 +13,7 @@ COM Hijacking VOODOO
 
 ## Description
 
-COM-Hunter is a COM Hijacking persistnce tool.
+COM-Hunter is a COM Hijacking persistence tool.
 
 Available in both a .NET version and a BOF variant fully compatible with Cobalt Strike.
 
