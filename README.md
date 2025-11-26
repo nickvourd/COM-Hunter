@@ -174,7 +174,7 @@ Usage:  COM-Hunter.exe remove <CLSID> <options>
 
 ℹ️  Required `MinGW-w64` toolchain (`x86_64-w64-mingw32-gcc` and `i686-w64-mingw32-gcc`)
 
-Compile the BOF objects for both architectures:
+ℹ️ Compile the BOF objects for both architectures:
 
 ```
 ./make_all.sh
@@ -186,7 +186,9 @@ Create the `com_hunter_*` directories.<br />
 Compile `com_hunter_*.x64.o` and `com_hunter_*.x86.o`.<br />
 Move both object files into the `com_hunter_*/` directories.<br />
 
-To clean build artifacts, go into evary `src` directory and execute:
+ℹ️ To use the BOF modules, simply load `com_hunter_bof.cna` into Cobalt Strike.
+
+ℹ️ To clean build artifacts, go into evary `src` directory and execute:
 
 ```
 make clean
