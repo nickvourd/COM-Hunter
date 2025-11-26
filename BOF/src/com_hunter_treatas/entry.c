@@ -98,7 +98,7 @@ DWORD CheckExtension(const char* filePath, const char* serverType)
     return ERROR_SUCCESS;
 }
 
-// Create server registry key (InprocServer32 or LocalServer32)
+// Create server registry key 
 DWORD CreateServerRegistryCU(const char* registryKey, const char* payload, const char* serverType)
 {
     DWORD dwErrorCode = ERROR_SUCCESS;
@@ -239,7 +239,7 @@ DWORD ComHunterTreatAs(const char* hijackClsid, const char* spoofClsid, const ch
     const char* serverType = NULL;
     const char* registryKey = NULL;
 
-    // Build registry keys for the spoof CLSID (where payload will be)
+    // Build registry keys for the spoof CLSID
     BuildRegistryKey(spoofClsid, inprocPath, localPath, sizeof(inprocPath));
     
     // Build TreatAs key for the hijack CLSID
