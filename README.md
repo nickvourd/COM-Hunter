@@ -44,6 +44,7 @@ The authors and contributors of this project are not liable for any illegal use 
     - [Acknowledgement](#acknowledgement)
     - [Usage](#usage)
     - [.NET Examples](#net-examples)
+    - [BOF Implementation](#bof-implementation)
     - [References](#references)
 
 ## Acknowledgement
@@ -167,6 +168,28 @@ Usage:  COM-Hunter.exe remove <CLSID> <options>
 
 ```
 .\COM-Hunter.exe remove AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 -i -u
+```
+
+## BOF Implementation
+
+ℹ️  Required `MinGW-w64` toolchain (`x86_64-w64-mingw32-gcc` and `i686-w64-mingw32-gcc`)
+
+Compile the BOF objects for both architectures:
+
+```
+./make_all.sh
+```
+
+This will:
+
+Create the `com_hunter_*` directories.
+Compile `com_hunter_*.x64.o` and `com_hunter_*.x86.o`.
+Move both object files into the `com_hunter_*/` directories
+
+To clean build artifacts, go into evary `src` directory and execute:
+
+```
+make clean
 ```
 
 ## References
