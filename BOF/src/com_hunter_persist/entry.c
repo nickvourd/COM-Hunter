@@ -13,7 +13,7 @@ void BuildRegistryKey(const char* clsid, char* inprocPath, char* localPath, DWOR
     MSVCRT$_snprintf(localPath, pathSize, "SOFTWARE\\Classes\\CLSID\\%s\\LocalServer32", clsid);
 }
 
-// Get file extension from path (returns pointer to extension including dot, or NULL if none)
+// Get file extension from path 
 const char* GetFileExtension(const char* filePath)
 {
     const char* dot = NULL;
@@ -39,7 +39,7 @@ const char* GetFileExtension(const char* filePath)
     return NULL;
 }
 
-// Case-insensitive string comparison (renamed to avoid Windows API conflict)
+// Case-insensitive string comparison
 int ComHunterStrCmpI(const char* s1, const char* s2)
 {
     while (*s1 && *s2)
