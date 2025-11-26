@@ -182,9 +182,9 @@ Compile the BOF objects for both architectures:
 
 This will:
 
-Create the `com_hunter_*` directories.
-Compile `com_hunter_*.x64.o` and `com_hunter_*.x86.o`.
-Move both object files into the `com_hunter_*/` directories
+Create the `com_hunter_*` directories.<br />
+Compile `com_hunter_*.x64.o` and `com_hunter_*.x86.o`.<br />
+Move both object files into the `com_hunter_*/` directories.<br />
 
 To clean build artifacts, go into evary `src` directory and execute:
 
