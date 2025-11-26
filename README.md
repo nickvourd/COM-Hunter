@@ -176,3 +176,4 @@ Usage:  COM-Hunter.exe remove <CLSID> <options>
 - [Userland Persistence with Scheduled Tasks and COM Handler Hijacking by Enigma0x3](https://enigma0x3.net/2016/05/25/userland-persistence-with-scheduled-tasks-and-com-handler-hijacking/)
 - [COM Objects Hijacking by Virus Total](https://blog.virustotal.com/2024/03/com-objects-hijacking.html)
 - [CS-Remote-OPs-BOF GitHub Repository by TrustedSec](https://github.com/trustedsec/CS-Remote-OPs-BOF)
+- [A Developer's Introduction to Beacon Object Files by TrustedSec](https://www.trustedsec.com/blog/a-developers-introduction-to-beacon-object-files)
