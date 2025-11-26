@@ -13,7 +13,9 @@ COM Hijacking VOODOO
 
 ## Description
 
-COM-Hunter is a COM Hijacking persistnce tool written in C#.
+COM-Hunter is a COM Hijacking persistnce tool.
+
+Available in both a .NET version and a BOF variant fully compatible with Cobalt Strike.
 
 ![Static Badge](https://img.shields.io/badge/.NET-4.8-blue?style=flat&logoSize=auto)
 ![Static Badge](https://img.shields.io/badge/C-lang-yellow?style=flat&logoSize=auto)
