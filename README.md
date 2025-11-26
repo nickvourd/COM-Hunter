@@ -43,7 +43,7 @@ The authors and contributors of this project are not liable for any illegal use 
     - [Table of Contents](#table-of-contents)
     - [Acknowledgement](#acknowledgement)
     - [Usage](#usage)
-    - [Examples](#examples)
+    - [.NET Examples](#net-examples)
     - [References](#references)
 
 ## Acknowledgement
@@ -113,7 +113,7 @@ Usage:  COM-Hunter.exe remove <CLSID> <options>
     -u, --user                  Remove DLL and EXE implementations in HKCU
 ```
 
-## Examples
+## .NET Examples
 
 :information_source: Search DLL and EXE implementations in HKLM and HKCU:
 
