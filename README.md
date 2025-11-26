@@ -54,6 +54,10 @@ Special thanks to my friend [Marios Gyftos](https://www.linkedin.com/in/marios-g
 
 Inspired by the [RTO course](https://www.zeropointsecurity.co.uk/course/red-team-ops) from [@zeropointsecltd](https://x.com/zeropointsecltd).
 
+BOF implementation inspired by [Lefteris Panos](https://x.com/lefterispan) and his awesome project, [RegPersist](https://github.com/leftp/RegPersist).
+
+The `base.c` and `bofdefs.h` files are direct copies from [TrustedSec's CS-Situational-Awareness-BOF](https://github.com/trustedsec/CS-Situational-Awareness-BOF) project.
+
 ## Usage
 
 ```
