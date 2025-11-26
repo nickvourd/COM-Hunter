@@ -45,7 +45,7 @@ DWORD RemoveRegistry(HKEY hRootKey, const char* hKeyPath, const char* hiveName)
     else if (dwErrorCode == ERROR_FILE_NOT_FOUND)
     {
         internal_printf("[!] %s NOT Found in %s (nothing to remove)\n\n", serverType, hiveName);
-        dwErrorCode = ERROR_SUCCESS; // Not finding is not an error
+        dwErrorCode = ERROR_SUCCESS; 
     }
     else
     {
