@@ -175,3 +175,4 @@ Usage:  COM-Hunter.exe remove <CLSID> <options>
 - [Abusing the COM Registry Structure (Part 2): Hijacking & Loading Techniques by BOHOPS](https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/)
 - [Userland Persistence with Scheduled Tasks and COM Handler Hijacking by Enigma0x3](https://enigma0x3.net/2016/05/25/userland-persistence-with-scheduled-tasks-and-com-handler-hijacking/)
 - [COM Objects Hijacking by Virus Total](https://blog.virustotal.com/2024/03/com-objects-hijacking.html)
+- [CS-Remote-OPs-BOF GitHub Repository by TrustedSec](https://github.com/trustedsec/CS-Remote-OPs-BOF)
