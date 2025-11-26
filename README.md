@@ -182,11 +182,11 @@ Usage:  COM-Hunter.exe remove <CLSID> <options>
 
 This will:
 
-Create the `com_hunter_*` directories.<br />
-Compile `com_hunter_*.x64.o` and `com_hunter_*.x86.o`.<br />
-Move both object files into the `com_hunter_*/` directories.<br />
+1) Create the `com_hunter_*` directories.
+2) Compile `com_hunter_*.x64.o` and `com_hunter_*.x86.o`.
+3) Move both object files into the `com_hunter_*/` directories.
 
-ℹ️ To use the BOF modules, simply load `com_hunter_bof.cna` into Cobalt Strike.
+ℹ️ After compiling the BOF modules, simply load `com_hunter_bof.cna` into Cobalt Strike.
 
 ℹ️ To clean build artifacts, go into evary `src` directory and execute:
 
