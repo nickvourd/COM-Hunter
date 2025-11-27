@@ -202,3 +202,4 @@ make clean
 - [COM Objects Hijacking by Virus Total](https://blog.virustotal.com/2024/03/com-objects-hijacking.html)
 - [CS-Remote-OPs-BOF GitHub Repository by TrustedSec](https://github.com/trustedsec/CS-Remote-OPs-BOF)
 - [A Developer's Introduction to Beacon Object Files by TrustedSec](https://www.trustedsec.com/blog/a-developers-introduction-to-beacon-object-files)
+- [BOF Development & Tradecraft Course by Zeropoint Security](https://www.zeropointsecurity.co.uk/course/bof-dev)
