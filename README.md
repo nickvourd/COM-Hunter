@@ -29,6 +29,8 @@ The following list explains the available modes:
 - **TreatAs Mode**: Performs COM hijacking persistence via the TreatAs registry key and a fake (forwardable) CLSID using `LocalServer32` or `InprocServer32`.
 - **Remove Mode**: Removes persistence mechanisms that rely on `LocalServer32`, `InprocServer32`, and related registry entries under both `HKLM` and `HKCU`.
 
+ℹ️ COM-Hunter is included in the [Cobalt Strike Community Kit](https://cobalt-strike.github.io/community_kit/), a curated repository of community-developed tools and extensions recognized by the Cobalt Strike team.
+
 > If you find any bugs, don’t hesitate to [report them](https://github.com/nickvourd/COM-Hunter/issues). Your feedback is valuable in improving the quality of this project!
 
 ## Disclaimer
