@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install MinGW-w64
         run: |
@@ -47,7 +47,7 @@ jobs:
         run: find artifacts -type f -print
 
       - name: Upload BOF artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: COM-Hunter-BOFs
           path: artifacts/
