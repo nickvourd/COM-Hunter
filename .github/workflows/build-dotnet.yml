@@ -1,0 +1,46 @@
+name: Build COM-Hunter .NET
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "COM-Hunter/**"
+      - ".github/workflows/build-dotnet.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "COM-Hunter/**"
+      - ".github/workflows/build-dotnet.yml"
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build COM-Hunter
+        shell: cmd
+        run: >
+          msbuild "COM-Hunter\COM-Hunter.csproj"
+          /t:Rebuild
+          /p:Configuration=Release
+          /p:Platform=AnyCPU
+          /m
+
+      - name: Upload COM-Hunter executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: COM-Hunter-dotnet
+          path: |
+            COM-Hunter/bin/Release/COM-Hunter.exe
+            COM-Hunter/bin/Release/COM-Hunter.exe.config
+            COM-Hunter/bin/Release/COM-Hunter.pdb
+          if-no-files-found: error
