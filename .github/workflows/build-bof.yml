@@ -1,0 +1,54 @@
+name: Build COM-Hunter BOFs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "BOF/**"
+      - ".github/workflows/build-bof.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "BOF/**"
+      - ".github/workflows/build-bof.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install MinGW-w64
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes mingw-w64 make
+
+      - name: Make build script executable
+        run: chmod +x BOF/make_all.sh
+
+      - name: Build x64 and x86 BOFs
+        working-directory: BOF
+        run: ./make_all.sh
+
+      - name: Collect build artifacts
+        run: |
+          mkdir -p artifacts
+
+          find BOF -type f \
+            \( -name "*.x64.o" -o -name "*.x86.o" -o -name "*.cna" \) \
+            -exec cp --parents {} artifacts/ \;
+
+      - name: Display compiled files
+        run: find artifacts -type f -print
+
+      - name: Upload BOF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: COM-Hunter-BOFs
+          path: artifacts/
+          if-no-files-found: error
