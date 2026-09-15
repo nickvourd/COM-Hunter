@@ -2,8 +2,6 @@ name: Build COM-Hunter .NET
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 6 * * *'   # every day, 06:00 UTC (00:00/01:00 your time, DST-dependent)
   push:
     branches:
       - main
