@@ -10,6 +10,10 @@ namespace COM_Hunter
     {
         static void Main(string[] args)
         {
+            #if DEBUG
+                Console.WriteLine("[DEBUG] COM-Hunter compiled in Debug mode.");
+            #endif
+            
             //Show Ascii Art
             Info.ShowLogo();
 
